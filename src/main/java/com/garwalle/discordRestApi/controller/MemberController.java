@@ -37,8 +37,8 @@ public class MemberController {
     public ResponseEntity<Member> getMemberById(@PathVariable("id") long id) {
         Optional<Member> member = memberRepo.findById(id);
 
-        if (member.isEmpty()) return new ResponseEntity<>(member.get(), HttpStatus.OK);
-        else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (member.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else return new ResponseEntity<>(member.get(), HttpStatus.OK);
     }
 
     @PostMapping("/members")

@@ -13,5 +13,26 @@ services:
     volumes:
       - db:/var/lib/mysql
 
+  app:
+    depends_on:
+      - mysqldb
+    build: ./
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - '6868:8080'
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysqldb:3307/discord",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+
 volumes:
   db:
