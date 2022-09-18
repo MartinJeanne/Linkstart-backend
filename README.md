@@ -34,6 +34,7 @@ docker-compose up
 ## Test
 Make request with Postman, curl, or other tool to test the API.
 <br>
+<br>
 
 Add a member with this HTTP POST method:
 ```
@@ -47,6 +48,7 @@ And this body:
 }
 ```
 The server should albready return you the member created.
+<br>
 <br>
 
 Retrieve the members with HTTP GET method:
