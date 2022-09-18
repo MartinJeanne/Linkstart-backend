@@ -2,7 +2,7 @@
 Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for a Discord bot !  
 <br>
 
-## Install & Run
+## Install
 Install dependencies & build jar file:  
 ```
 mvn clean install -Dmaven.test.failure.ignore=true
@@ -24,7 +24,32 @@ MYSQL_PASSWORD=theUserPassword
 ```
 <br>
 
-Finally, run the whole infrastructure:  
+## Run
+Run the whole infrastructure:  
 ```
 docker-compose up
+```
+<br>
+
+## Test
+Make request with Postman, curl, or other tool to test the API.
+<br>
+
+Add a member with this HTTP POST method:
+```
+http://localhost:8080/api/members
+```
+And this body:
+```
+{
+    "username": "Martin",
+    "honor": 1
+}
+```
+The server should albready return you the member created.
+<br>
+
+Retrieve the members with HTTP GET method:
+```
+http://localhost:8080/api/members
 ```
