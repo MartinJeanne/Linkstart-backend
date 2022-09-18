@@ -20,7 +20,7 @@ Create an .env file at the root of the project, and specify this information:
 MYSQLDB_DATABASE=databaseName
 MYSQLDB_ROOT_PASSWORD=theRootPassword
 MYSQL_USER=aUser
-MYSQL_PASSWORD=TheUserPassword
+MYSQL_PASSWORD=theUserPassword
 ```
 <br>
 
