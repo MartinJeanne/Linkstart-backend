@@ -47,7 +47,6 @@ And this body:
     "honor": 1
 }
 ```
-The server should albready return you the member created.  
 <br>
 
 Retrieve the members with HTTP GET method:
