@@ -3,7 +3,7 @@ Back-end web services (REST API + DB) developped with Spring Boot, mysql and Doc
 <br>
 
 ## Install & Run
-Install dependecies & build jar file:  
+Install dependencies & build jar file:  
 ```
 mvn clean install -Dmaven.test.failure.ignore=true
 ```
