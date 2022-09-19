@@ -1,4 +1,4 @@
 FROM openjdk:18
-ADD target/discordRestApi-0.0.1-SNAPSHOT.jar discordRestApi-0.0.1-SNAPSHOT.jar
+ADD target/linkStartBackend-0.0.1-SNAPSHOT.jar linkStartBackend-0.0.1-SNAPSHOT.jar
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "discordRestApi-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "linkStartBackend-0.0.1-SNAPSHOT.jar"]
