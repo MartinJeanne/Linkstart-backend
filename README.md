@@ -3,7 +3,7 @@ Back-end web services (REST API + DB) developped with Spring Boot, mysql and Doc
 <br>
 
 ## Install
-Install dependencies & build jar file:
+Install dependencies & build jar file:  
 (the paramater allow to ignore build test failure, because the db is not startd and will be in a docker container: it is not accessible for now and build test will fail.)
 ```
 mvn clean install -Dmaven.test.failure.ignore=true
