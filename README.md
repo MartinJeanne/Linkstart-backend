@@ -16,7 +16,7 @@ docker build -t linkstartapi .
 ```
 <br>
 
-Create an .env file at the root of the project, and set the futur database information:
+Create an .env file at the root of the project, and set the future database information:
 ```
 MYSQLDB_DATABASE=databaseName
 MYSQLDB_ROOT_PASSWORD=theRootPassword
