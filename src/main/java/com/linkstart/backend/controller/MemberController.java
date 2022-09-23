@@ -21,7 +21,7 @@ public class MemberController {
     @GetMapping("/members")
     public ResponseEntity<List<Member>> getAllMembers(@RequestParam(required = false) String username) {
         try {
-            List<Member> members = new ArrayList<Member>();
+            List<Member> members = new ArrayList<>();
 
             if (username == null) members.addAll(memberRepo.findAll());
             else members.addAll(memberRepo.findByUsernameContaining(username));
