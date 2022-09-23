@@ -21,13 +21,26 @@ services:
       - linkstart-mysql
     restart: on-failure
     ports:
-      - "8081:8080"
+      - "8000:8080"
     networks:
       - linkstart-network
     environment:
       - spring.datasource.url=jdbc:mysql://linkstart-mysql:3306/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
       - spring.datasource.username=${MYSQL_USER}
       - spring.datasource.password=${MYSQL_PASSWORD}
+
+
+  linkstart-keycloak:
+    image: quay.io/keycloak/keycloak:19.0.2
+    container_name: linkstart-keycloak
+    ports:
+      - "8001:8081"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command:
+      - "start-dev"
+      - "-Djboss.socket.binding.port-offset=1" #TODO
 
 
 networks:
