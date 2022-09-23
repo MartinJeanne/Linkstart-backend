@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.garwalle</groupId>
-	<artifactId>linkStartBackend</artifactId>
+	<artifactId>linkstartBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>linkStartBackend</name>
 	<description>Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for a Discord bot.</description>

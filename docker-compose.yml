@@ -15,7 +15,7 @@ services:
 
 
   linkstart-api:
-    image: linkstart-api
+    build: .
     container_name: linkstart-api
     depends_on:
       - linkstart-mysql
