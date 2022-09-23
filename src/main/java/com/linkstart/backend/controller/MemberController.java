@@ -1,7 +1,7 @@
-package com.garwalle.discordRestApi.controller;
+package com.linkstart.backend.controller;
 
-import com.garwalle.discordRestApi.model.Member;
-import com.garwalle.discordRestApi.repo.MemberRepo;
+import com.linkstart.backend.model.Member;
+import com.linkstart.backend.repo.MemberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.garwalle.discordRestApi;
+package com.linkstart.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

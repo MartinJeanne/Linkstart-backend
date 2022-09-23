@@ -1,4 +1,4 @@
-package com.garwalle.discordRestApi.model;
+package com.linkstart.backend.model;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -16,18 +16,18 @@ public class Member {
 
     private String username;
 
-    private int honor;
+    private int discordId;
 
     public Member() {
     }
 
-    public Member(String username, int honor) {
+    public Member(String username, int discordId) {
         this.username = username;
-        this.honor = honor;
+        this.discordId = discordId;
     }
 
     @Override
     public String toString() {
-        return "Member : " + this.username + ", honor : " + honor;
+        return "Member: " + this.username + ", discordId: " + this.discordId;
     }
 }
