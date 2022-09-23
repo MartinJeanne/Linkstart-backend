@@ -44,7 +44,7 @@ public class MemberController {
     @PostMapping("/members")
     public ResponseEntity<Member> createTutorial(@RequestBody Member member) {
         try {
-            Member m = memberRepo.save(new Member(member.getUsername(), member.getHonor()));
+            Member m = memberRepo.save(new Member(member.getUsername(), member.getDiscordId()));
             return new ResponseEntity<>(m, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +58,7 @@ public class MemberController {
         if (optionalMember.isPresent()) {
             Member m = optionalMember.get();
             m.setUsername(member.getUsername());
-            m.setHonor(member.getHonor());
+            m.setDiscordId(member.getDiscordId());
             return new ResponseEntity<>(memberRepo.save(m), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
