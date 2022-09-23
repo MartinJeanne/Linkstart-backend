@@ -12,7 +12,7 @@ mvn clean install -Dmaven.test.failure.ignore=true
 
 Create the docker image of the rest api:
 ```
-docker build -t linkstartapi .
+docker build -t linkstart-api .
 ```
 <br>
 
