@@ -1,11 +1,12 @@
 version: "3"
 services:
-  mysqldb:
+  linkstart-db:
     image: mysql:8
+    container_name: linkstart-db
     ports:
       - "3307:3306"
     networks:
-      - springmysql
+      - linkstart-network
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQLDB_DATABASE}
@@ -13,15 +14,16 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
 
-  linkstartapi:
-    image: linkstartapi
+  linkstart-api:
+    image: linkstart-api
+    container_name: linkstart-api
     depends_on:
-      - mysqldb
+      - linkstart-db
     restart: on-failure
     ports:
       - "8081:8080"
     networks:
-      - springmysql
+      - linkstart-network
     environment:
       - spring.datasource.url=jdbc:mysql://mysqldb:3306/${MYSQLDB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
       - spring.datasource.username=${MYSQL_USER}
@@ -29,4 +31,4 @@ services:
 
 
 networks:
-  springmysql:
+  linkstart-network:
