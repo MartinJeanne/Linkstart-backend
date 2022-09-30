@@ -21,7 +21,7 @@ services:
       - linkstart-mysql
     restart: on-failure
     ports:
-      - "8000:8080"
+      - "8001:8081"
     networks:
       - linkstart-network
     environment:
@@ -34,10 +34,11 @@ services:
     image: quay.io/keycloak/keycloak:19.0.2
     container_name: linkstart-keycloak
     ports:
-      - "8001:8081"
+      - "8000:8080"
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_URL_HOST=mykeycloakdb
     command:
       - "start-dev"
       - "-Djboss.socket.binding.port-offset=1" #TODO
