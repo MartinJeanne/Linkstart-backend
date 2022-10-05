@@ -10,12 +10,6 @@ mvn clean install -Dmaven.test.failure.ignore=true
 ```
 <br>
 
-Create the docker image of the rest api:
-```
-docker build -t linkstart-api .
-```
-<br>
-
 Create an .env file at the root of the project, and set the future database information:
 ```
 MYSQLDB_DATABASE=databaseName
