@@ -1,6 +1,5 @@
 # Linkstart-backend
 Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for a Discord bot !  
-<br>
 
 ## Install
 Install dependencies & build jar file:  
@@ -17,14 +16,12 @@ MYSQLDB_ROOT_PASSWORD=theRootPassword
 MYSQL_USER=aUser
 MYSQL_PASSWORD=theUserPassword
 ```
-<br>
 
 ## Run
 Run the whole infrastructure:
 ```
 docker-compose up
 ```
-<br>
 
 ## Test
 Make request with Postman, curl, or other tool to test the API.
