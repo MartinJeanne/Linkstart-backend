@@ -30,7 +30,7 @@ Make request with Postman, curl, or other tool to test the API.
 
 Add a member with this HTTP POST method:
 ```
-http://localhost:8081/api/members
+http://localhost:8001/api/members
 ```
 And this body:
 ```
@@ -43,5 +43,5 @@ And this body:
 
 Retrieve the members with HTTP GET method:
 ```
-http://localhost:8081/api/members
+http://localhost:8001/api/members
 ```
