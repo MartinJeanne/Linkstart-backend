@@ -5,7 +5,7 @@ Back-end web services (REST API + DB) developped with Spring Boot, mysql and Doc
 Rename the file .env.example to .env and set the variables in it to whatever you want
 
 ## Run
-Run the whole infrastructure:
+Run the whole infrastructure (you need docker):
 ```
 docker-compose up
 ```
