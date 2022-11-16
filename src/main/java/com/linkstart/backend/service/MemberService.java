@@ -34,13 +34,13 @@ public class MemberService {
             if (username == null) members.addAll(memberRepo.findAll());
             else members.addAll(memberRepo.findByUsernameContaining(username));
 
-            if (members.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (members.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
             CollectionModel<MemberDto> response = memberModelAssembler.toCollectionModel(members);
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -48,19 +48,19 @@ public class MemberService {
         Optional<Member> optMember = memberRepo.findById(id);
 
         if (optMember.isPresent()) {
-            MemberDto member = memberModelAssembler.toModel(optMember.get());
-            return new ResponseEntity<>(member, HttpStatus.OK);
+            MemberDto memberDto = memberModelAssembler.toModel(optMember.get());
+            return ResponseEntity.ok(memberDto);
         }
-        else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     public ResponseEntity<MemberDto> createMember(MemberDto memberDto) {
         try {
             Member member = memberModelAssembler.toEntity(memberDto);
             memberRepo.save(member);
-            return new ResponseEntity<>(memberModelAssembler.toModel(member), HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(memberModelAssembler.toModel(member));
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -72,15 +72,15 @@ public class MemberService {
         Member member = memberModelAssembler.toEntity(memberDto);
         Member updatedMember = memberRepo.save(member);
 
-        return new ResponseEntity<>(memberModelAssembler.toModel(updatedMember), HttpStatus.OK);
+        return ResponseEntity.ok(memberModelAssembler.toModel(updatedMember));
     }
 
     public ResponseEntity<HttpStatus> deleteMember(long id) {
         try {
             memberRepo.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

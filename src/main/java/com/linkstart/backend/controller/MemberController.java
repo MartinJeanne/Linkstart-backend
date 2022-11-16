@@ -18,8 +18,7 @@ public class MemberController {
     }
 
     @GetMapping
-    public
-    ResponseEntity<CollectionModel<MemberDto>> getAllMembers(@RequestParam(required = false) String username) {
+    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers(@RequestParam(required = false) String username) {
         return memberService.getAllMembers(username);
     }
 
