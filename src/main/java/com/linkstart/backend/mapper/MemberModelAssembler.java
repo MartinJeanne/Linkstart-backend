@@ -33,18 +33,17 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
 
     @Override
     public CollectionModel<MemberDto> toCollectionModel(Iterable<? extends Member> members) {
-        List<MemberDto> memberDtos = new ArrayList<>();
+        List<MemberDto> membersList = new ArrayList<>();
 
         for (Member member: members) {
             MemberDto memberDto = this.toDto(member);
             memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
-            memberDtos.add(memberDto);
+            membersList.add(memberDto);
         }
 
-        CollectionModel<MemberDto> actorModels = CollectionModel.of(memberDtos);
-        actorModels.add(linkTo(MemberController.class).withSelfRel());
-
-        return actorModels;
+        CollectionModel<MemberDto> membersDto = CollectionModel.of(membersList);
+        membersDto.add(linkTo(MemberController.class).withSelfRel());
+        return membersDto;
     }
 
     public Member toEntity(MemberDto memberDto) {
@@ -64,7 +63,6 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         memberDto.setId(member.getId());
         memberDto.setUsername(member.getUsername());
         memberDto.setDiscordId(member.getDiscordId());
-
         return memberDto;
     }
 }
