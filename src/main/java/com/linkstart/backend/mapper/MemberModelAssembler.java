@@ -3,7 +3,7 @@ package com.linkstart.backend.mapper;
 import com.linkstart.backend.controller.MemberController;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.dto.MemberDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.SneakyThrows;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -21,22 +21,31 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         super(MemberController.class, MemberDto.class);
     }
 
+    // to model (Dto)
     @Override
     public MemberDto toModel(Member member) {
-        MemberDto memberDto = this.toDto(member);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId(member.getId());
+        memberDto.setUsername(member.getUsername());
+        memberDto.setDiscordId(member.getDiscordId());
 
-        memberDto.add(linkTo(MemberController.class).withRel("member"));
+        memberDto.add(linkTo(MemberController.class).withRel("members"));
         memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
 
         return memberDto;
     }
 
+    //to model (Dto) as list
     @Override
     public CollectionModel<MemberDto> toCollectionModel(Iterable<? extends Member> members) {
         List<MemberDto> membersList = new ArrayList<>();
 
         for (Member member: members) {
-            MemberDto memberDto = this.toDto(member);
+            MemberDto memberDto = new MemberDto();
+            memberDto.setId(member.getId());
+            memberDto.setUsername(member.getUsername());
+            memberDto.setDiscordId(member.getDiscordId());
+
             memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
             membersList.add(memberDto);
         }
@@ -46,6 +55,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         return membersDto;
     }
 
+    // to entity
     public Member toEntity(MemberDto memberDto) {
         if (memberDto == null) return null;
 
@@ -54,15 +64,5 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         member.setUsername(memberDto.getUsername());
         member.setDiscordId(memberDto.getDiscordId());
         return  member;
-    }
-
-    private MemberDto toDto(Member member) {
-        if (member == null) return null;
-
-        MemberDto memberDto = new MemberDto();
-        memberDto.setId(member.getId());
-        memberDto.setUsername(member.getUsername());
-        memberDto.setDiscordId(member.getDiscordId());
-        return memberDto;
     }
 }

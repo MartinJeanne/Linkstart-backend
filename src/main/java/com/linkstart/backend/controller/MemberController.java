@@ -1,5 +1,7 @@
 package com.linkstart.backend.controller;
 
+import com.linkstart.backend.exception.NoUserException;
+import com.linkstart.backend.exception.UserNotFoundException;
 import com.linkstart.backend.model.dto.MemberDto;
 import com.linkstart.backend.service.MemberService;
 import org.springframework.hateoas.CollectionModel;
