@@ -3,7 +3,6 @@ package com.linkstart.backend.mapper;
 import com.linkstart.backend.controller.MemberController;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.dto.MemberDto;
-import lombok.SneakyThrows;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
