@@ -20,8 +20,13 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers(@RequestParam(required = false) String username) {
-        return memberService.getAllMembers(username);
+    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers() {
+        return memberService.getAllMembers();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<CollectionModel<MemberDto>> seahMembers(@RequestParam String filter) {
+        return memberService.searchMembers(filter);
     }
 
     @GetMapping("/{id}")

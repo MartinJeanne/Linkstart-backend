@@ -1,5 +1,6 @@
 package com.linkstart.backend.service;
 
+import com.linkstart.backend.exception.NoFilterGiven;
 import com.linkstart.backend.exception.NoUserException;
 import com.linkstart.backend.exception.UserNotFoundException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
@@ -26,12 +27,18 @@ public class MemberService {
         this.memberModelAssembler = memberModelAssembler;
     }
 
-    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers(String filter) {
-        List<Member> members = new ArrayList<>();
+    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers() {
+        List<Member> members = memberRepo.findAll();
 
-        // Get all members or some if search passed
-        if (filter == null) members.addAll(memberRepo.findAll());
-        else members.addAll(memberRepo.findByUsernameContaining(filter));
+        if (members.isEmpty()) throw new NoUserException();
+
+        CollectionModel<MemberDto> response = memberModelAssembler.toCollectionModel(members);
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<CollectionModel<MemberDto>> searchMembers(String filter) {
+        if (filter.isEmpty()) throw new NoFilterGiven();
+        List<Member> members = memberRepo.findByUsernameContaining(filter);
 
         if (members.isEmpty()) throw new NoUserException();
 
