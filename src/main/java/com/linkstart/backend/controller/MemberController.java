@@ -23,12 +23,15 @@ public class MemberController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<CollectionModel<MemberDto>> seahMembers(@RequestParam String filter) {
-        return memberService.searchMembers(filter);
+    public ResponseEntity<CollectionModel<MemberDto>> seahMembers(
+            @RequestParam String filter,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "2") Integer size) {
+        return memberService.searchMembers(filter, page, size);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDto> getMemberById(@PathVariable("id") long id) {
+    public ResponseEntity<MemberDto> getMemberById(@PathVariable("id") Long id) {
         return memberService.getMemberById(id);
     }
 
@@ -38,12 +41,12 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDto> updateMember(@PathVariable("id") long id, @RequestBody MemberDto memberDto) {
+    public ResponseEntity<MemberDto> updateMember(@PathVariable("id") Long id, @RequestBody MemberDto memberDto) {
         return memberService.updateMember(id, memberDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteMember(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteMember(@PathVariable("id") Long id) {
         return memberService.deleteMember(id);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Getter
 @Setter
 public class MemberDto extends RepresentationModel<MemberDto> {
-    private long id;
+    private Long id;
     private String username;
     private int discordId;
 }

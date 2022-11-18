@@ -1,10 +1,10 @@
 package com.linkstart.backend.repo;
 
 import com.linkstart.backend.model.entity.Member;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface MemberRepo extends JpaRepository<Member, Long> {
-    List<Member> findByUsernameContaining(String username);
+    Page<Member> findByUsernameContaining(String filter, Pageable pageable);
 }
