@@ -26,8 +26,10 @@ public class MemberController {
     public ResponseEntity<CollectionModel<MemberDto>> seahMembers(
             @RequestParam String filter,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "2") Integer size) {
-        return memberService.searchMembers(filter, page, size);
+            @RequestParam(defaultValue = "2") Integer size,
+            @RequestParam(defaultValue = "username") String orderBy,
+            @RequestParam(defaultValue = "true") Boolean ascending) {
+        return memberService.searchMembers(filter, page, size, orderBy, ascending);
     }
 
     @GetMapping("/{id}")
