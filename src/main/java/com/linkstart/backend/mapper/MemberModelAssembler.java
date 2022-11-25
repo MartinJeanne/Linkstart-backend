@@ -26,7 +26,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         MemberDto memberDto = new MemberDto();
         memberDto.setId(member.getId());
         memberDto.setUsername(member.getUsername());
-        memberDto.setDiscordId(member.getDiscordId());
+        memberDto.setMail(member.getMail());
 
         memberDto.add(linkTo(MemberController.class).withRel("members"));
         memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
@@ -43,7 +43,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
             MemberDto memberDto = new MemberDto();
             memberDto.setId(member.getId());
             memberDto.setUsername(member.getUsername());
-            memberDto.setDiscordId(member.getDiscordId());
+            memberDto.setMail(member.getMail());
 
             memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
             membersList.add(memberDto);
@@ -61,7 +61,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         Member member = new Member();
         member.setId(memberDto.getId());
         member.setUsername(memberDto.getUsername());
-        member.setDiscordId(memberDto.getDiscordId());
+        member.setMail(memberDto.getMail());
         return  member;
     }
 }

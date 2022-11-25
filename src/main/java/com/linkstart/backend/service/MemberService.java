@@ -68,7 +68,7 @@ public class MemberService {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<MemberDto> getMemberById(Long id) throws UserNotFoundException {
+    public ResponseEntity<MemberDto> getMemberById(Long id) {
         Member member = memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         MemberDto memberDto = memberModelAssembler.toModel(member);
         return ResponseEntity.ok(memberDto);
@@ -80,7 +80,7 @@ public class MemberService {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberModelAssembler.toModel(member));
     }
 
-    public ResponseEntity<MemberDto> updateMember(Long id, MemberDto memberDto) throws UserNotFoundException {
+    public ResponseEntity<MemberDto> updateMember(Long id, MemberDto memberDto) {
         memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         memberDto.setId(id);
         Member updatedMember = memberRepo.save(memberModelAssembler.toEntity(memberDto));
@@ -88,7 +88,7 @@ public class MemberService {
         return ResponseEntity.ok(memberModelAssembler.toModel(updatedMember));
     }
 
-    public ResponseEntity<HttpStatus> deleteMember(Long id) throws UserNotFoundException {
+    public ResponseEntity<HttpStatus> deleteMember(Long id) {
         Member member = memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         memberRepo.delete(member);
         return ResponseEntity.status(HttpStatus.OK).build();

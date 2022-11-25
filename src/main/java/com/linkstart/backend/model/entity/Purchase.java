@@ -5,25 +5,34 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.Date;
 
 
 @Getter
 @Setter
 @Entity
-public class Member {
+public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    private String username;
+    @ManyToOne
+    private Member member;
 
     @NotNull
-    private String mail;
+    private Long price;
+
+    @NotNull
+    private OffsetDateTime created_at;
+
+    @NotNull
+    private OffsetDateTime deliver_at;
 
     @Override
     public String toString() {
-        return "Member: " + this.username + ", discordId: " + this.mail;
+        return "Not implemented toString";
     }
 }

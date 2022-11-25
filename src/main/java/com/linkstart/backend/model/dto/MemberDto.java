@@ -9,5 +9,5 @@ import org.springframework.hateoas.RepresentationModel;
 public class MemberDto extends RepresentationModel<MemberDto> {
     private Long id;
     private String username;
-    private int discordId;
+    private String mail;
 }
