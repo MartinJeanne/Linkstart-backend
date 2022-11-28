@@ -1,32 +1,21 @@
 package com.linkstart.backend.service;
 
-import com.linkstart.backend.exception.NoColumnsException;
-import com.linkstart.backend.exception.NoFilterGivenException;
 import com.linkstart.backend.exception.NoUserException;
 import com.linkstart.backend.exception.UserNotFoundException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
 import com.linkstart.backend.mapper.PurchaseModelAssembler;
-import com.linkstart.backend.model.dto.MemberDto;
 import com.linkstart.backend.model.dto.PurchaseDto;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.entity.Purchase;
 import com.linkstart.backend.repo.MemberRepo;
 import com.linkstart.backend.repo.PurchaseRepo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PurchaseService {
@@ -89,6 +78,13 @@ public class PurchaseService {
         Purchase purchase = purchaseRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         PurchaseDto purchaseDto = purchaseModelAssembler.toModel(purchase);
         return ResponseEntity.ok(purchaseDto);
+    }
+
+    public ResponseEntity<CollectionModel<PurchaseDto>> getPurchaseByMemberId(Long id) {
+        List<Purchase> purchases = purchaseRepo.findPurchasesByMember_Id(id);
+        if (purchases.isEmpty()) throw new NoUserException();
+        CollectionModel<PurchaseDto> response = purchaseModelAssembler.toCollectionModel(purchases);
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<PurchaseDto> createPurchase(PurchaseDto purchaseDto, Long memberId) {

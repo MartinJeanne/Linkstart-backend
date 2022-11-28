@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.time.OffsetDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -13,6 +12,6 @@ public class PurchaseDto extends RepresentationModel<PurchaseDto> {
     private Long id;
     private MemberDto member;
     private Long price;
-    private OffsetDateTime created_at;
-    private OffsetDateTime deliver_at;
+    private Date created_at;
+    private Date deliver_at;
 }

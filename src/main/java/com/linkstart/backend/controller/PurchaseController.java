@@ -1,8 +1,6 @@
 package com.linkstart.backend.controller;
 
-import com.linkstart.backend.model.dto.MemberDto;
 import com.linkstart.backend.model.dto.PurchaseDto;
-import com.linkstart.backend.service.MemberService;
 import com.linkstart.backend.service.PurchaseService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -39,6 +37,11 @@ public class PurchaseController {
     @GetMapping("/{id}")
     public ResponseEntity<PurchaseDto> getPurchaseById(@PathVariable("id") Long id) {
         return purchaseService.getPurchaseById(id);
+    }
+
+    @GetMapping("/members/{id}")
+    public ResponseEntity<CollectionModel<PurchaseDto>> getPurchaseByMemberId(@PathVariable("id") Long id) {
+        return purchaseService.getPurchaseByMemberId(id);
     }
 
     @PostMapping

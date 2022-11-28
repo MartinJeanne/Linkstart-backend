@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 
 @Getter
@@ -26,10 +25,10 @@ public class Purchase {
     private Long price;
 
     @NotNull
-    private OffsetDateTime created_at;
+    private Date created_at;
 
     @NotNull
-    private OffsetDateTime deliver_at;
+    private Date deliver_at;
 
     @Override
     public String toString() {

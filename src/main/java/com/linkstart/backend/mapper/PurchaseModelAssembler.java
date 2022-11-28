@@ -1,27 +1,16 @@
 package com.linkstart.backend.mapper;
 
-import com.linkstart.backend.controller.MemberController;
 import com.linkstart.backend.controller.PurchaseController;
-import com.linkstart.backend.model.dto.MemberDto;
 import com.linkstart.backend.model.dto.PurchaseDto;
-import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.entity.Purchase;
-import com.linkstart.backend.repo.MemberRepo;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
-import java.util.Locale;
 
-import static java.time.OffsetDateTime.now;
-import static java.time.ZoneOffset.UTC;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -58,6 +47,8 @@ public class PurchaseModelAssembler extends RepresentationModelAssemblerSupport<
 
         for (Purchase purchase: purchases) {
             PurchaseDto purchaseDto = new PurchaseDto();
+            purchaseDto.setId(purchase.getId());
+            purchaseDto.setMember(memberModelAssembler.toModel(purchase.getMember()));
             purchaseDto.setPrice(purchase.getPrice());
             purchaseDto.setCreated_at(purchase.getCreated_at());
             purchaseDto.setDeliver_at(purchase.getDeliver_at());
@@ -80,12 +71,9 @@ public class PurchaseModelAssembler extends RepresentationModelAssemblerSupport<
         purchase.setId(purchase.getId());
         purchase.setMember(memberModelAssembler.toEntity(purchaseDto.getMember()));
         purchase.setPrice(purchaseDto.getPrice());
-        purchase.setCreated_at(now(UTC));
-        purchase.setDeliver_at(OffsetDateTime.of(
-                LocalDate.of(2022, 12, 1),
-                LocalTime.of(12, 15, 30),
-                ZoneOffset.of("+03:00"))
-        );
+
+        purchase.setCreated_at(new Date(System.currentTimeMillis()));
+        purchase.setDeliver_at(purchaseDto.getDeliver_at());
         return purchase;
     }
 }
