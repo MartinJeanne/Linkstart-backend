@@ -2,8 +2,8 @@ package com.linkstart.backend.service;
 
 import com.linkstart.backend.exception.NoColumnsException;
 import com.linkstart.backend.exception.NoFilterGivenException;
-import com.linkstart.backend.exception.NoUserException;
-import com.linkstart.backend.exception.UserNotFoundException;
+import com.linkstart.backend.exception.NoContentException;
+import com.linkstart.backend.exception.NoContentFoundException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.dto.MemberDto;
@@ -42,7 +42,7 @@ public class MemberService {
     public ResponseEntity<CollectionModel<MemberDto>> getAllMembers() {
         List<Member> members = memberRepo.findAll();
 
-        if (members.isEmpty()) throw new NoUserException();
+        if (members.isEmpty()) throw new NoContentException("user");
 
         CollectionModel<MemberDto> response = memberModelAssembler.toCollectionModel(members);
         return ResponseEntity.ok(response);
@@ -62,14 +62,14 @@ public class MemberService {
         else pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Member> members = memberRepo.findByUsernameContaining(filter, pageable);
 
-        if (members.isEmpty()) throw new NoUserException();
+        if (members.isEmpty()) throw new NoContentException("member");
 
         PagedModel<MemberDto> response = pagedResourcesAssembler.toModel(members, memberModelAssembler);
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<MemberDto> getMemberById(Long id) {
-        Member member = memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        Member member = memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         MemberDto memberDto = memberModelAssembler.toModel(member);
         return ResponseEntity.ok(memberDto);
     }
@@ -81,7 +81,7 @@ public class MemberService {
     }
 
     public ResponseEntity<MemberDto> updateMember(Long id, MemberDto memberDto) {
-        memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         memberDto.setId(id);
         Member updatedMember = memberRepo.save(memberModelAssembler.toEntity(memberDto));
 
@@ -89,7 +89,7 @@ public class MemberService {
     }
 
     public ResponseEntity<HttpStatus> deleteMember(Long id) {
-        Member member = memberRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        Member member = memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         memberRepo.delete(member);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

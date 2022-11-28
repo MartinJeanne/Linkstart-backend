@@ -2,8 +2,8 @@ package com.linkstart.backend.controller;
 
 import com.linkstart.backend.exception.NoColumnsException;
 import com.linkstart.backend.exception.NoFilterGivenException;
-import com.linkstart.backend.exception.NoUserException;
-import com.linkstart.backend.exception.UserNotFoundException;
+import com.linkstart.backend.exception.NoContentException;
+import com.linkstart.backend.exception.NoContentFoundException;
 import com.linkstart.backend.model.entity.Member;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler({UserNotFoundException.class, NoUserException.class})
+    @ExceptionHandler({NoContentFoundException.class, NoContentException.class})
     public ResponseEntity<Object> handleNoUser(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());

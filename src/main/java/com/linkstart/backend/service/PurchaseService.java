@@ -1,7 +1,7 @@
 package com.linkstart.backend.service;
 
-import com.linkstart.backend.exception.NoUserException;
-import com.linkstart.backend.exception.UserNotFoundException;
+import com.linkstart.backend.exception.NoContentException;
+import com.linkstart.backend.exception.NoContentFoundException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
 import com.linkstart.backend.mapper.PurchaseModelAssembler;
 import com.linkstart.backend.model.dto.PurchaseDto;
@@ -46,7 +46,7 @@ public class PurchaseService {
     public ResponseEntity<CollectionModel<PurchaseDto>> getAllPurchases() {
         List<Purchase> purchases = purchaseRepo.findAll();
 
-        if (purchases.isEmpty()) throw new NoUserException();
+        if (purchases.isEmpty()) throw new NoContentException("purchase");
 
         CollectionModel<PurchaseDto> response = purchaseModelAssembler.toCollectionModel(purchases);
         return ResponseEntity.ok(response);
@@ -75,20 +75,20 @@ public class PurchaseService {
     */
 
     public ResponseEntity<PurchaseDto> getPurchaseById(Long id) {
-        Purchase purchase = purchaseRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        Purchase purchase = purchaseRepo.findById(id).orElseThrow(() -> new NoContentFoundException("purchase", id));
         PurchaseDto purchaseDto = purchaseModelAssembler.toModel(purchase);
         return ResponseEntity.ok(purchaseDto);
     }
 
     public ResponseEntity<CollectionModel<PurchaseDto>> getPurchaseByMemberId(Long id) {
         List<Purchase> purchases = purchaseRepo.findPurchasesByMember_Id(id);
-        if (purchases.isEmpty()) throw new NoUserException();
+        if (purchases.isEmpty()) throw new NoContentException("purchase");
         CollectionModel<PurchaseDto> response = purchaseModelAssembler.toCollectionModel(purchases);
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<PurchaseDto> createPurchase(PurchaseDto purchaseDto, Long memberId) {
-        Member member = this.memberRepo.findById(memberId).orElseThrow(() -> new UserNotFoundException(memberId));
+        Member member = this.memberRepo.findById(memberId).orElseThrow(() -> new NoContentFoundException("user", memberId));
         purchaseDto.setMember(memberModelAssembler.toModel(member));
         Purchase purchase = purchaseModelAssembler.toEntity(purchaseDto);
         purchaseRepo.save(purchase);
@@ -96,7 +96,7 @@ public class PurchaseService {
     }
 
     public ResponseEntity<PurchaseDto> updatePurchase(Long id, PurchaseDto purchaseDto) {
-        purchaseRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        purchaseRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         purchaseDto.setId(id);
         Purchase updatedPurchase = purchaseRepo.save(purchaseModelAssembler.toEntity(purchaseDto));
 
@@ -104,7 +104,7 @@ public class PurchaseService {
     }
 
     public ResponseEntity<HttpStatus> deletePurchase(Long id) {
-        Purchase purchase = purchaseRepo.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        Purchase purchase = purchaseRepo.findById(id).orElseThrow(() -> new NoContentFoundException("purchase", id));
         purchaseRepo.delete(purchase);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
