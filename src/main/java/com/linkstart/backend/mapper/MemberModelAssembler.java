@@ -1,7 +1,7 @@
 package com.linkstart.backend.mapper;
 
 import com.linkstart.backend.controller.MemberController;
-import com.linkstart.backend.controller.PurchaseController;
+import com.linkstart.backend.controller.PlaylistController;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.dto.MemberDto;
 import org.springframework.hateoas.CollectionModel;
@@ -26,10 +26,9 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
     public MemberDto toModel(Member member) {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(member.getId());
-        memberDto.setUsername(member.getUsername());
-        memberDto.setMail(member.getMail());
+        memberDto.setTag(member.getTag());
 
-        memberDto.add(linkTo(methodOn(PurchaseController.class).getPurchaseByMemberId(memberDto.getId()))
+        memberDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistsByMemberId(memberDto.getId()))
                 .withRel("member purchases"));
         memberDto.add(linkTo(MemberController.class).withRel("members"));
         memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
@@ -45,10 +44,9 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         for (Member member: members) {
             MemberDto memberDto = new MemberDto();
             memberDto.setId(member.getId());
-            memberDto.setUsername(member.getUsername());
-            memberDto.setMail(member.getMail());
+            memberDto.setTag(member.getTag());
 
-            memberDto.add(linkTo(methodOn(PurchaseController.class).getPurchaseByMemberId(memberDto.getId()))
+            memberDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistsByMemberId(memberDto.getId()))
                     .withRel("member purchases"));
             memberDto.add(linkTo(methodOn(MemberController.class).getMemberById(memberDto.getId())).withSelfRel());
             membersList.add(memberDto);
@@ -65,8 +63,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
 
         Member member = new Member();
         member.setId(memberDto.getId());
-        member.setUsername(memberDto.getUsername());
-        member.setMail(memberDto.getMail());
+        member.setTag(memberDto.getTag());
         return  member;
     }
 }

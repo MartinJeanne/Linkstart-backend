@@ -27,20 +27,5 @@ services:
       - spring.datasource.username=${MYSQL_USER}
       - spring.datasource.password=${MYSQL_PASSWORD}
 
-
-  linkstart-keycloak:
-    image: quay.io/keycloak/keycloak:19.0.2
-    container_name: linkstart-keycloak
-    ports:
-      - "8000:8080"
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_DB_URL_HOST=mykeycloakdb
-    command:
-      - "start-dev"
-      - "-Djboss.socket.binding.port-offset=1" #TODO
-
-
 networks:
   linkstart-network:

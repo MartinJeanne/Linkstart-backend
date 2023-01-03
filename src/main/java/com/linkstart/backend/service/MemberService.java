@@ -60,7 +60,7 @@ public class MemberService {
         Pageable pageable;
         if (ascending) pageable = PageRequest.of(page, size, Sort.by(orderBy));
         else pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
-        Page<Member> members = memberRepo.findByUsernameContaining(filter, pageable);
+        Page<Member> members = memberRepo.findByTagContaining(filter, pageable);
 
         if (members.isEmpty()) throw new NoContentException("member");
 

@@ -23,7 +23,7 @@ public class MemberController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<CollectionModel<MemberDto>> seahMembers(
+    public ResponseEntity<CollectionModel<MemberDto>> searchMembers(
             @RequestParam String filter,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "2") Integer size,

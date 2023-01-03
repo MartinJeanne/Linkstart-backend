@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Getter
 @Setter
 @Entity
@@ -17,13 +16,10 @@ public class Member {
     private Long id;
 
     @NotNull
-    private String username;
-
-    @NotNull
-    private String mail;
+    private String tag;
 
     @Override
     public String toString() {
-        return "Member: " + this.username + ", discordId: " + this.mail;
+        return "Member: " + this.tag + ", discordId: " + this.id;
     }
 }

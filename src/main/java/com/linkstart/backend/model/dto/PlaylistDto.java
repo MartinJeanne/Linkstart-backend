@@ -8,10 +8,9 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class PurchaseDto extends RepresentationModel<PurchaseDto> {
+public class PlaylistDto extends RepresentationModel<PlaylistDto> {
     private Long id;
+    private String name;
     private MemberDto member;
-    private Long price;
     private Date created_at;
-    private Date deliver_at;
 }

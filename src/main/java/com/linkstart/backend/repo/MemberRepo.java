@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepo extends JpaRepository<Member, Long> {
-    Page<Member> findByUsernameContaining(String filter, Pageable pageable);
+    Page<Member> findByTagContaining(String filter, Pageable pageable);
 }
