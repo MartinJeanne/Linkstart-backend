@@ -21,7 +21,7 @@ And this body:
 ```
 {
     "id": 1,
-    "tar": test#0001
+    "tag": test#0001
 }
 ```
 <br>
