@@ -38,17 +38,17 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity<PlaylistDto> createMember(@RequestBody PlaylistDto playlistDto, @RequestParam Long memberId) {
+    public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam Long memberId) {
         return playlistService.createPlaylist(playlistDto, memberId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PlaylistDto> updateMember(@PathVariable("id") Long id, @RequestBody PlaylistDto playlistDto) {
+    public ResponseEntity<PlaylistDto> updatePlaylist(@PathVariable("id") Long id, @RequestBody PlaylistDto playlistDto) {
         return playlistService.updatePlaylist(id, playlistDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteMember(@PathVariable("id") Long id) {
+    public ResponseEntity<HttpStatus> deletePlaylist(@PathVariable("id") Long id) {
         return playlistService.deletePlaylist(id);
     }
 

@@ -11,6 +11,7 @@ import java.sql.Date;
 public class PlaylistDto extends RepresentationModel<PlaylistDto> {
     private Long id;
     private String name;
+    private String url;
     private MemberDto member;
     private Date created_at;
 }

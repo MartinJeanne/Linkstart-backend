@@ -31,6 +31,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
         playlistDto.setId(playlist.getId());
         playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
         playlistDto.setName(playlist.getName());
+        playlistDto.setUrl(playlist.getUrl());
         playlistDto.setCreated_at(playlist.getCreated_at());
 
         playlistDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistById(playlist.getId())).withSelfRel());
@@ -49,6 +50,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
             playlistDto.setId(playlist.getId());
             playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
             playlistDto.setName(playlist.getName());
+            playlistDto.setUrl(playlist.getUrl());
             playlistDto.setCreated_at(playlist.getCreated_at());
 
             playlistDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistById(playlistDto.getId())).withSelfRel());
@@ -68,6 +70,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
         playlist.setId(playlist.getId());
         playlist.setMember(memberModelAssembler.toEntity(playlisDto.getMember()));
         playlist.setName(playlisDto.getName());
+        playlist.setUrl(playlisDto.getUrl());
         playlist.setCreated_at(new Date(System.currentTimeMillis()));
         return playlist;
     }

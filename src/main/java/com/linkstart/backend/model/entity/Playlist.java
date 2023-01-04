@@ -17,13 +17,15 @@ public class Playlist {
     private Long id;
 
     @NotNull
-    private String name;
-
-    @NotNull
     @ManyToOne
     private Member member;
 
     @NotNull
+    private String name;
+
+    @NotNull
+    private String url;
+
     private Date created_at;
 
     @Override
