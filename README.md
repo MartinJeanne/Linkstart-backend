@@ -24,7 +24,6 @@ And this body:
     "tag": test#0001
 }
 ```
-<br>
 
 Retrieve the members with HTTP GET method:
 ```
