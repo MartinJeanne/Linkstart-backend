@@ -5,9 +5,13 @@ import com.linkstart.backend.exception.NoFilterGivenException;
 import com.linkstart.backend.exception.NoContentException;
 import com.linkstart.backend.exception.NoContentFoundException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
+import com.linkstart.backend.mapper.PlaylistModelAssembler;
+import com.linkstart.backend.model.dto.PlaylistDto;
 import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.dto.MemberDto;
+import com.linkstart.backend.model.entity.Playlist;
 import com.linkstart.backend.repo.MemberRepo;
+import com.linkstart.backend.repo.PlaylistRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,15 +32,25 @@ public class MemberService {
 
     private final MemberRepo memberRepo;
     private final MemberModelAssembler memberModelAssembler;
-    private final PagedResourcesAssembler<Member> pagedResourcesAssembler;
+    private final PagedResourcesAssembler<Member> memberPagedResourcesAssembler;
+
+    private final PlaylistRepo playlistRepo;
+    private final PlaylistModelAssembler playlistModelAssembler;
+    private final PagedResourcesAssembler<Playlist> playlistPagedResourcesAssembler;
 
     public MemberService(
             MemberRepo memberRepo,
             MemberModelAssembler memberModelAssembler,
-            PagedResourcesAssembler<Member> pagedResourcesAssembler) {
+            PagedResourcesAssembler<Member> memberPagedResourcesAssembler,
+            PlaylistRepo playlistRepo,
+            PlaylistModelAssembler playlistModelAssembler,
+            PagedResourcesAssembler<Playlist> playlistPagedResourcesAssembler) {
         this.memberRepo = memberRepo;
         this.memberModelAssembler = memberModelAssembler;
-        this.pagedResourcesAssembler = pagedResourcesAssembler;
+        this.memberPagedResourcesAssembler = memberPagedResourcesAssembler;
+        this.playlistRepo = playlistRepo;
+        this.playlistModelAssembler = playlistModelAssembler;
+        this.playlistPagedResourcesAssembler = playlistPagedResourcesAssembler;
     }
 
     public ResponseEntity<CollectionModel<MemberDto>> getAllMembers() {
@@ -64,7 +78,7 @@ public class MemberService {
 
         if (members.isEmpty()) throw new NoContentException("member");
 
-        PagedModel<MemberDto> response = pagedResourcesAssembler.toModel(members, memberModelAssembler);
+        PagedModel<MemberDto> response = memberPagedResourcesAssembler.toModel(members, memberModelAssembler);
         return ResponseEntity.ok(response);
     }
 
@@ -84,7 +98,6 @@ public class MemberService {
         memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         memberDto.setId(id);
         Member updatedMember = memberRepo.save(memberModelAssembler.toEntity(memberDto));
-
         return ResponseEntity.ok(memberModelAssembler.toModel(updatedMember));
     }
 
@@ -92,5 +105,14 @@ public class MemberService {
         Member member = memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
         memberRepo.delete(member);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylistsByMemberId(Long id) {
+        Member member = memberRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
+
+        List<Playlist> playlists = playlistRepo.findByMember_Id(member.getId());
+        if (playlists.isEmpty()) throw new NoContentException("playlist");
+        CollectionModel<PlaylistDto> response = playlistModelAssembler.toCollectionModel(playlists);
+        return ResponseEntity.ok(response);
     }
 }

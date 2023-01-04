@@ -1,6 +1,7 @@
 package com.linkstart.backend.controller;
 
 import com.linkstart.backend.model.dto.MemberDto;
+import com.linkstart.backend.model.dto.PlaylistDto;
 import com.linkstart.backend.service.MemberService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,10 @@ public class MemberController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteMember(@PathVariable("id") Long id) {
         return memberService.deleteMember(id);
+    }
+
+    @GetMapping("/{id}/playlists")
+    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylistsByMemberId(@PathVariable("id") Long id) {
+        return memberService.getPlaylistsByMemberId(id);
     }
 }

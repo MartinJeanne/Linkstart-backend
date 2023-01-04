@@ -1,6 +1,5 @@
 package com.linkstart.backend.repo;
 
-import com.linkstart.backend.model.entity.Member;
 import com.linkstart.backend.model.entity.Playlist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

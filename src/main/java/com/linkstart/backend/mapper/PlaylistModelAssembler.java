@@ -26,47 +26,49 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
 
     // to model (Dto)
     @Override
-    public PlaylistDto toModel(Playlist Playlist) {
-        PlaylistDto PlaylistDto = new PlaylistDto();
-        PlaylistDto.setId(Playlist.getId());
-        PlaylistDto.setMember(memberModelAssembler.toModel(Playlist.getMember()));
-        PlaylistDto.setCreated_at(Playlist.getCreated_at());
+    public PlaylistDto toModel(Playlist playlist) {
+        PlaylistDto playlistDto = new PlaylistDto();
+        playlistDto.setId(playlist.getId());
+        playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
+        playlistDto.setName(playlist.getName());
+        playlistDto.setCreated_at(playlist.getCreated_at());
 
-        PlaylistDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistById(PlaylistDto.getId())).withSelfRel());
-        PlaylistDto.add(linkTo(PlaylistController.class).withRel("Playlists"));
+        playlistDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistById(playlist.getId())).withSelfRel());
+        playlistDto.add(linkTo(PlaylistController.class).withRel("Playlists"));
 
-        return PlaylistDto;
+        return playlistDto;
     }
 
     //to model (Dto) as list
     @Override
-    public CollectionModel<PlaylistDto> toCollectionModel(Iterable<? extends Playlist> Playlists) {
-        List<PlaylistDto> PlaylistsList = new ArrayList<>();
+    public CollectionModel<PlaylistDto> toCollectionModel(Iterable<? extends Playlist> playlists) {
+        List<PlaylistDto> playlistsList = new ArrayList<>();
 
-        for (Playlist Playlist: Playlists) {
-            PlaylistDto PlaylistDto = new PlaylistDto();
-            PlaylistDto.setId(Playlist.getId());
-            PlaylistDto.setMember(memberModelAssembler.toModel(Playlist.getMember()));
-            PlaylistDto.setCreated_at(Playlist.getCreated_at());
+        for (Playlist playlist: playlists) {
+            PlaylistDto playlistDto = new PlaylistDto();
+            playlistDto.setId(playlist.getId());
+            playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
+            playlistDto.setName(playlist.getName());
+            playlistDto.setCreated_at(playlist.getCreated_at());
 
-            PlaylistDto.add(linkTo(methodOn(PlaylistController.class)
-                    .getPlaylistById(PlaylistDto.getId())).withSelfRel());
-            PlaylistsList.add(PlaylistDto);
+            playlistDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistById(playlistDto.getId())).withSelfRel());
+            playlistsList.add(playlistDto);
         }
 
-        CollectionModel<PlaylistDto> PlaylistsDto = CollectionModel.of(PlaylistsList);
+        CollectionModel<PlaylistDto> PlaylistsDto = CollectionModel.of(playlistsList);
         PlaylistsDto.add(linkTo(PlaylistController.class).withSelfRel());
         return PlaylistsDto;
     }
 
     // to entity
-    public Playlist toEntity(PlaylistDto PlaylistDto) {
-        if (PlaylistDto == null) return null;
+    public Playlist toEntity(PlaylistDto playlisDto) {
+        if (playlisDto == null) return null;
 
-        Playlist Playlist = new Playlist();
-        Playlist.setId(Playlist.getId());
-        Playlist.setMember(memberModelAssembler.toEntity(PlaylistDto.getMember()));
-        Playlist.setCreated_at(new Date(System.currentTimeMillis()));
-        return Playlist;
+        Playlist playlist = new Playlist();
+        playlist.setId(playlist.getId());
+        playlist.setMember(memberModelAssembler.toEntity(playlisDto.getMember()));
+        playlist.setName(playlisDto.getName());
+        playlist.setCreated_at(new Date(System.currentTimeMillis()));
+        return playlist;
     }
 }
