@@ -1,11 +1,11 @@
 # Linkstart-backend
-Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for a Discord bot !  
+Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for my Discord bot !  
 
 ## Setup
 Rename the file .env.example to .env and set the variables in it to whatever you want
 
 ## Run
-Run the whole infrastructure (you need docker):
+Run the whole Docker infrastructure:
 ```
 docker-compose up
 ```
@@ -20,8 +20,8 @@ http://localhost:8001/api/members
 And this body:
 ```
 {
-    "username": "Martin",
-    "honor": 1
+    "id": 1,
+    "tar": test#0001
 }
 ```
 <br>
