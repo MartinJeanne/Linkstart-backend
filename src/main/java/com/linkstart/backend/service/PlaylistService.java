@@ -2,7 +2,6 @@ package com.linkstart.backend.service;
 
 import com.linkstart.backend.exception.NoColumnsException;
 import com.linkstart.backend.exception.NoContentException;
-import com.linkstart.backend.exception.NoContentFoundException;
 import com.linkstart.backend.exception.NoFilterGivenException;
 import com.linkstart.backend.mapper.MemberModelAssembler;
 import com.linkstart.backend.mapper.PlaylistModelAssembler;
@@ -51,14 +50,12 @@ public class PlaylistService {
     public ResponseEntity<CollectionModel<PlaylistDto>> getAllPlaylists() {
         List<Playlist> playlists = playlistRepo.findAll();
 
-        if (playlists.isEmpty()) throw new NoContentException("playlist");
-
         CollectionModel<PlaylistDto> response = playlistModelAssembler.toCollectionModel(playlists);
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<CollectionModel<PlaylistDto>> searchPlaylists(
-            String filter, Integer page, Integer size, String orderBy, Boolean ascending) {
+            String filter, int page, int size, String orderBy, Boolean ascending) {
         if (filter.isEmpty()) throw new NoFilterGivenException();
 
         List<String> columns = new ArrayList<>();
@@ -71,20 +68,18 @@ public class PlaylistService {
         else pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Playlist> playlists = playlistRepo.findByNameContaining(filter, pageable);
 
-        if (playlists.isEmpty()) throw new NoContentException("playlist");
-
         PagedModel<PlaylistDto> response = pagedResourcesAssembler.toModel(playlists, playlistModelAssembler);
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<PlaylistDto> getPlaylistById(Long id) {
-        Playlist playlist = playlistRepo.findById(id).orElseThrow(() -> new NoContentFoundException("playlist", id));
+        Playlist playlist = playlistRepo.findById(id).orElseThrow(NoContentException::new);
         PlaylistDto PlaylistDto = playlistModelAssembler.toModel(playlist);
         return ResponseEntity.ok(PlaylistDto);
     }
 
     public ResponseEntity<PlaylistDto> createPlaylist(PlaylistDto playlistDto, Long memberId) {
-        Member member = this.memberRepo.findById(memberId).orElseThrow(() -> new NoContentFoundException("user", memberId));
+        Member member = this.memberRepo.findById(memberId).orElseThrow(NoContentException::new);
         playlistDto.setMember(memberModelAssembler.toModel(member));
         Playlist playlist = playlistModelAssembler.toEntity(playlistDto);
         playlistRepo.save(playlist);
@@ -92,14 +87,14 @@ public class PlaylistService {
     }
 
     public ResponseEntity<PlaylistDto> updatePlaylist(Long id, PlaylistDto PlaylistDto) {
-        playlistRepo.findById(id).orElseThrow(() -> new NoContentFoundException("playlist", id));
+        playlistRepo.findById(id).orElseThrow(NoContentException::new);
         PlaylistDto.setId(id);
         Playlist updatedPlaylist = playlistRepo.save(playlistModelAssembler.toEntity(PlaylistDto));
         return ResponseEntity.ok(playlistModelAssembler.toModel(updatedPlaylist));
     }
 
     public ResponseEntity<HttpStatus> deletePlaylist(Long id) {
-        Playlist playlist = playlistRepo.findById(id).orElseThrow(() -> new NoContentFoundException("user", id));
+        Playlist playlist = playlistRepo.findById(id).orElseThrow(NoContentException::new);
         playlistRepo.delete(playlist);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

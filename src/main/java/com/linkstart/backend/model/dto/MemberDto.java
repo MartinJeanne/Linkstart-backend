@@ -8,5 +8,6 @@ import org.springframework.hateoas.RepresentationModel;
 @Setter
 public class MemberDto extends RepresentationModel<MemberDto> {
     private Long id;
+    private String discordId;
     private String tag;
 }

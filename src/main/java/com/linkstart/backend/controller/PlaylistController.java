@@ -25,8 +25,8 @@ public class PlaylistController {
     @GetMapping("/search")
     public ResponseEntity<CollectionModel<PlaylistDto>> searchMembers(
             @RequestParam String filter,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "2") Integer size,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
             @RequestParam(defaultValue = "username") String orderBy,
             @RequestParam(defaultValue = "true") Boolean ascending) {
         return playlistService.searchPlaylists(filter, page, size, orderBy, ascending);

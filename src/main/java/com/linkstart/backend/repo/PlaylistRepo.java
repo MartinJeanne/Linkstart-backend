@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface PlaylistRepo extends JpaRepository<Playlist, Long> {
     List<Playlist> findByMember_Id(Long id);
+    List<Playlist> findByMember_DiscordId(String id);
     Page<Playlist> findByNameContaining(String filter, Pageable pageable);
 }

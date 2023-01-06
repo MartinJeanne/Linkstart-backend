@@ -19,15 +19,15 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<MemberDto>> getAllMembers() {
-        return memberService.getAllMembers();
+    public ResponseEntity<CollectionModel<MemberDto>> getMembers(@RequestBody(required = false) String discordId) {
+        return memberService.getMembers(discordId);
     }
 
     @GetMapping("/search")
     public ResponseEntity<CollectionModel<MemberDto>> searchMembers(
             @RequestParam String filter,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "2") Integer size,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
             @RequestParam(defaultValue = "username") String orderBy,
             @RequestParam(defaultValue = "true") Boolean ascending) {
         return memberService.searchMembers(filter, page, size, orderBy, ascending);

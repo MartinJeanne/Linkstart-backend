@@ -26,6 +26,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
     public MemberDto toModel(Member member) {
         MemberDto memberDto = new MemberDto();
         memberDto.setId(member.getId());
+        memberDto.setDiscordId(member.getDiscordId());
         memberDto.setTag(member.getTag());
 
         memberDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistsByMemberId(memberDto.getId()))
@@ -44,6 +45,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
         for (Member member: members) {
             MemberDto memberDto = new MemberDto();
             memberDto.setId(member.getId());
+            memberDto.setDiscordId(member.getDiscordId());
             memberDto.setTag(member.getTag());
 
             memberDto.add(linkTo(methodOn(PlaylistController.class).getPlaylistsByMemberId(memberDto.getId()))
@@ -63,6 +65,7 @@ public class MemberModelAssembler extends RepresentationModelAssemblerSupport<Me
 
         Member member = new Member();
         member.setId(memberDto.getId());
+        member.setDiscordId(memberDto.getDiscordId());
         member.setTag(memberDto.getTag());
         return  member;
     }

@@ -12,8 +12,10 @@ import javax.persistence.*;
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String discordId;
     @NotNull
     private String tag;
 
