@@ -12,10 +12,14 @@ import com.linkstart.backend.repo.DiscordUserRepo;
 import com.linkstart.backend.repo.PlaylistRepo;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.core.EmbeddedWrapper;
+import org.springframework.hateoas.server.core.EmbeddedWrappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -68,6 +72,8 @@ public class DiscordUserService {
         DiscordUserDto discordUserDto = this.getDiscordUserById(id);
         DiscordUser discordUser = discordUserModelAssembler.toEntity(discordUserDto);
 
-        return playlistService.getPlaylistByDiscordUser(discordUser);
+        CollectionModel<PlaylistDto> playlists = playlistService.getPlaylistByDiscordUser(discordUser);
+        if (playlists.getContent().isEmpty()) return CollectionModel.empty();
+        else return  playlists;
     }
 }
