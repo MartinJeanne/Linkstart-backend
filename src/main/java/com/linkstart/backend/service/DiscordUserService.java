@@ -73,7 +73,6 @@ public class DiscordUserService {
         DiscordUser discordUser = discordUserModelAssembler.toEntity(discordUserDto);
 
         CollectionModel<PlaylistDto> playlists = playlistService.getPlaylistByDiscordUser(discordUser);
-        if (playlists.getContent().isEmpty()) return CollectionModel.empty();
-        else return  playlists;
+        return  playlists;
     }
 }
