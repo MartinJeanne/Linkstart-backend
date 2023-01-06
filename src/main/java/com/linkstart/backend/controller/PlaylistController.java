@@ -18,18 +18,8 @@ public class PlaylistController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<PlaylistDto>> getAllMembers() {
-        return playlistService.getAllPlaylists();
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<CollectionModel<PlaylistDto>> searchMembers(
-            @RequestParam String filter,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size,
-            @RequestParam(defaultValue = "username") String orderBy,
-            @RequestParam(defaultValue = "true") Boolean ascending) {
-        return playlistService.searchPlaylists(filter, page, size, orderBy, ascending);
+    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylists() {
+        return playlistService.getPlaylists();
     }
 
     @GetMapping("/{id}")
@@ -38,8 +28,8 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam Long memberId) {
-        return playlistService.createPlaylist(playlistDto, memberId);
+    public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam Long discordUserId) {
+        return playlistService.createPlaylist(playlistDto, discordUserId);
     }
 
     @PutMapping("/{id}")
@@ -52,7 +42,13 @@ public class PlaylistController {
         return playlistService.deletePlaylist(id);
     }
 
-    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylistsByMemberId(Long id) {
-        return playlistService.getPlaylistsByMemberId(id);
+    @GetMapping("/search")
+    public ResponseEntity<CollectionModel<PlaylistDto>> searchPlaylists(
+            @RequestParam String filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "username") String orderBy,
+            @RequestParam(defaultValue = "true") Boolean ascending) {
+        return playlistService.searchPlaylists(filter, page, size, orderBy, ascending);
     }
 }

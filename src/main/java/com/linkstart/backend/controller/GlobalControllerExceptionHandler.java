@@ -3,7 +3,7 @@ package com.linkstart.backend.controller;
 import com.linkstart.backend.exception.NoColumnsException;
 import com.linkstart.backend.exception.NoFilterGivenException;
 import com.linkstart.backend.exception.NoContentException;
-import com.linkstart.backend.model.entity.Member;
+import com.linkstart.backend.model.entity.DiscordUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -20,30 +20,28 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    private Map<String, Object> errorBuilder(String errorMessage) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("error", errorMessage);
-        body.put("timestamp", LocalDateTime.now());
-        return body;
-    }
-
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<Object> handleNoUser(Exception ex) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.errorBuilder(ex.toString()));
+    public ResponseEntity<Object> handleNoUser() {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class, NoFilterGivenException.class})
     public ResponseEntity<Object> handleNoFilterGiven(Exception ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(this.errorBuilder(ex.toString()));
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.toString());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
     @ExceptionHandler(NoColumnsException.class)
     public ResponseEntity<Object> handleNoNoColumns(Exception ex) {
-        Map<String, Object> body = this.errorBuilder(ex.toString());
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.toString());
 
         List<String> columns = new ArrayList<>();
-        Field[] fields = Member.class.getDeclaredFields();
-        for (Field field : fields) columns.add(field.getName());
+        Field[] fields = DiscordUser.class.getDeclaredFields();
+        for(Field field: fields) columns.add(field.getName());
         body.put("columnsList", columns);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }

@@ -3,12 +3,12 @@ package com.linkstart.backend.service;
 import com.linkstart.backend.exception.NoColumnsException;
 import com.linkstart.backend.exception.NoContentException;
 import com.linkstart.backend.exception.NoFilterGivenException;
-import com.linkstart.backend.mapper.MemberModelAssembler;
+import com.linkstart.backend.mapper.DiscordUserModelAssembler;
 import com.linkstart.backend.mapper.PlaylistModelAssembler;
 import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.model.entity.Member;
+import com.linkstart.backend.model.entity.DiscordUser;
 import com.linkstart.backend.model.entity.Playlist;
-import com.linkstart.backend.repo.MemberRepo;
+import com.linkstart.backend.repo.DiscordUserRepo;
 import com.linkstart.backend.repo.PlaylistRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,44 +31,26 @@ public class PlaylistService {
     private final PlaylistRepo playlistRepo;
     private final PlaylistModelAssembler playlistModelAssembler;
     private final PagedResourcesAssembler<Playlist> pagedResourcesAssembler;
-    private final MemberRepo memberRepo;
-    private final MemberModelAssembler memberModelAssembler;
+    private final DiscordUserRepo discordUserRepo;
+    private final DiscordUserModelAssembler discordUserModelAssembler;
 
     public PlaylistService(
             PlaylistRepo playlistRepo,
             PlaylistModelAssembler playlistModelAssembler,
             PagedResourcesAssembler<Playlist> pagedResourcesAssembler,
-            MemberRepo memberRepo,
-            MemberModelAssembler memberModelAssembler) {
+            DiscordUserRepo discordUserRepo,
+            DiscordUserModelAssembler discordUserModelAssembler) {
         this.playlistRepo = playlistRepo;
         this.playlistModelAssembler = playlistModelAssembler;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
-        this.memberRepo = memberRepo;
-        this.memberModelAssembler = memberModelAssembler;
+        this.discordUserRepo = discordUserRepo;
+        this.discordUserModelAssembler = discordUserModelAssembler;
     }
 
-    public ResponseEntity<CollectionModel<PlaylistDto>> getAllPlaylists() {
+    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylists() {
         List<Playlist> playlists = playlistRepo.findAll();
 
         CollectionModel<PlaylistDto> response = playlistModelAssembler.toCollectionModel(playlists);
-        return ResponseEntity.ok(response);
-    }
-
-    public ResponseEntity<CollectionModel<PlaylistDto>> searchPlaylists(
-            String filter, int page, int size, String orderBy, Boolean ascending) {
-        if (filter.isEmpty()) throw new NoFilterGivenException();
-
-        List<String> columns = new ArrayList<>();
-        Field[] fields = Playlist.class.getDeclaredFields();
-        for (Field field : fields) columns.add(field.getName());
-        if (!columns.contains(orderBy)) throw new NoColumnsException(orderBy);
-
-        Pageable pageable;
-        if (ascending) pageable = PageRequest.of(page, size, Sort.by(orderBy));
-        else pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
-        Page<Playlist> playlists = playlistRepo.findByNameContaining(filter, pageable);
-
-        PagedModel<PlaylistDto> response = pagedResourcesAssembler.toModel(playlists, playlistModelAssembler);
         return ResponseEntity.ok(response);
     }
 
@@ -78,9 +60,9 @@ public class PlaylistService {
         return ResponseEntity.ok(PlaylistDto);
     }
 
-    public ResponseEntity<PlaylistDto> createPlaylist(PlaylistDto playlistDto, Long memberId) {
-        Member member = this.memberRepo.findById(memberId).orElseThrow(NoContentException::new);
-        playlistDto.setMember(memberModelAssembler.toModel(member));
+    public ResponseEntity<PlaylistDto> createPlaylist(PlaylistDto playlistDto, Long discordUserId) {
+        DiscordUser discordUser = discordUserRepo.findById(discordUserId).orElseThrow(NoContentException::new);
+        playlistDto.setDiscordUserDto(discordUserModelAssembler.toModel(discordUser));
         Playlist playlist = playlistModelAssembler.toEntity(playlistDto);
         playlistRepo.save(playlist);
         return ResponseEntity.status(HttpStatus.CREATED).body(playlistModelAssembler.toModel(playlist));
@@ -99,10 +81,26 @@ public class PlaylistService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylistsByMemberId(Long id) {
-        List<Playlist> playlists = playlistRepo.findByMember_Id(id);
+    public CollectionModel<PlaylistDto> getPlaylistByDiscordUser(DiscordUser discordUser) {
+        List<Playlist> playlists = playlistRepo.findByDiscordUser(discordUser);
+        return playlistModelAssembler.toCollectionModel(playlists);
+    }
 
-        CollectionModel<PlaylistDto> response = playlistModelAssembler.toCollectionModel(playlists);
+    public ResponseEntity<CollectionModel<PlaylistDto>> searchPlaylists(
+            String filter, Integer page, Integer size, String orderBy, Boolean ascending) {
+        if (filter.isEmpty()) throw new NoFilterGivenException();
+
+        List<String> columns = new ArrayList<>();
+        Field[] fields = Playlist.class.getDeclaredFields();
+        for (Field field : fields) columns.add(field.getName());
+        if (!columns.contains(orderBy)) throw new NoColumnsException(orderBy);
+
+        Pageable pageable;
+        if (ascending) pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        else pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
+        Page<Playlist> playlists = playlistRepo.findByNameContaining(filter, pageable);
+
+        PagedModel<PlaylistDto> response = pagedResourcesAssembler.toModel(playlists, playlistModelAssembler);
         return ResponseEntity.ok(response);
     }
 }

@@ -12,6 +12,6 @@ public class PlaylistDto extends RepresentationModel<PlaylistDto> {
     private Long id;
     private String name;
     private String url;
-    private MemberDto member;
+    private DiscordUserDto discordUserDto;
     private Date created_at;
 }

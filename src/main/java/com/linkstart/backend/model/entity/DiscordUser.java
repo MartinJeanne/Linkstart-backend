@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class Member {
+public class DiscordUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

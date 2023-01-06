@@ -17,11 +17,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<Playlist, PlaylistDto> {
 
-    private final MemberModelAssembler memberModelAssembler;
+    private final DiscordUserModelAssembler discordUserModelAssembler;
 
-    public PlaylistModelAssembler(MemberModelAssembler memberModelAssembler) {
+    public PlaylistModelAssembler(DiscordUserModelAssembler discordUserModelAssembler) {
         super(PlaylistController.class, PlaylistDto.class);
-        this.memberModelAssembler = memberModelAssembler;
+        this.discordUserModelAssembler = discordUserModelAssembler;
     }
 
     // to model (Dto)
@@ -29,7 +29,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
     public PlaylistDto toModel(Playlist playlist) {
         PlaylistDto playlistDto = new PlaylistDto();
         playlistDto.setId(playlist.getId());
-        playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
+        playlistDto.setDiscordUserDto(discordUserModelAssembler.toModel(playlist.getDiscordUser()));
         playlistDto.setName(playlist.getName());
         playlistDto.setUrl(playlist.getUrl());
         playlistDto.setCreated_at(playlist.getCreated_at());
@@ -48,7 +48,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
         for (Playlist playlist: playlists) {
             PlaylistDto playlistDto = new PlaylistDto();
             playlistDto.setId(playlist.getId());
-            playlistDto.setMember(memberModelAssembler.toModel(playlist.getMember()));
+            playlistDto.setDiscordUserDto(discordUserModelAssembler.toModel(playlist.getDiscordUser()));
             playlistDto.setName(playlist.getName());
             playlistDto.setUrl(playlist.getUrl());
             playlistDto.setCreated_at(playlist.getCreated_at());
@@ -68,7 +68,7 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
 
         Playlist playlist = new Playlist();
         playlist.setId(playlist.getId());
-        playlist.setMember(memberModelAssembler.toEntity(playlisDto.getMember()));
+        playlist.setDiscordUser(discordUserModelAssembler.toEntity(playlisDto.getDiscordUserDto()));
         playlist.setName(playlisDto.getName());
         playlist.setUrl(playlisDto.getUrl());
         playlist.setCreated_at(new Date(System.currentTimeMillis()));
