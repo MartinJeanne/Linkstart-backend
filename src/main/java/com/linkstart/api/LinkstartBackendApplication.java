@@ -1,4 +1,4 @@
-package com.linkstart.backend;
+package com.linkstart.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

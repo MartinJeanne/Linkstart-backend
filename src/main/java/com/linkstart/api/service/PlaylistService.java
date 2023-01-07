@@ -1,15 +1,15 @@
-package com.linkstart.backend.service;
+package com.linkstart.api.service;
 
-import com.linkstart.backend.exception.NoColumnsException;
-import com.linkstart.backend.exception.NoContentException;
-import com.linkstart.backend.exception.NoFilterGivenException;
-import com.linkstart.backend.mapper.DiscordUserModelAssembler;
-import com.linkstart.backend.mapper.PlaylistModelAssembler;
-import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.model.entity.DiscordUser;
-import com.linkstart.backend.model.entity.Playlist;
-import com.linkstart.backend.repo.DiscordUserRepo;
-import com.linkstart.backend.repo.PlaylistRepo;
+import com.linkstart.api.exception.NoColumnsException;
+import com.linkstart.api.exception.NoContentException;
+import com.linkstart.api.exception.NoFilterGivenException;
+import com.linkstart.api.mapper.DiscordUserModelAssembler;
+import com.linkstart.api.mapper.PlaylistModelAssembler;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.entity.DiscordUser;
+import com.linkstart.api.model.entity.Playlist;
+import com.linkstart.api.repo.DiscordUserRepo;
+import com.linkstart.api.repo.PlaylistRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

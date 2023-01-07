@@ -1,8 +1,8 @@
-package com.linkstart.backend.controller;
+package com.linkstart.api.controller;
 
-import com.linkstart.backend.model.dto.DiscordUserDto;
-import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.service.DiscordUserService;
+import com.linkstart.api.model.dto.DiscordUserDto;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.service.DiscordUserService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.linkstart.backend.controller;
+package com.linkstart.api.controller;
 
-import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.service.PlaylistService;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.service.PlaylistService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

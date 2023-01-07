@@ -1,4 +1,4 @@
-package com.linkstart.backend.exception;
+package com.linkstart.api.exception;
 
 public class NoContentException extends RuntimeException {
     public NoContentException() {

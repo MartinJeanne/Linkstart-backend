@@ -1,9 +1,9 @@
-package com.linkstart.backend.controller;
+package com.linkstart.api.controller;
 
-import com.linkstart.backend.exception.NoColumnsException;
-import com.linkstart.backend.exception.NoFilterGivenException;
-import com.linkstart.backend.exception.NoContentException;
-import com.linkstart.backend.model.entity.DiscordUser;
+import com.linkstart.api.exception.NoColumnsException;
+import com.linkstart.api.exception.NoFilterGivenException;
+import com.linkstart.api.exception.NoContentException;
+import com.linkstart.api.model.entity.DiscordUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;

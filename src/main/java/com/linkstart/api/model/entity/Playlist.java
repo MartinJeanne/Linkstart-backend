@@ -1,4 +1,4 @@
-package com.linkstart.backend.model.entity;
+package com.linkstart.api.model.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;

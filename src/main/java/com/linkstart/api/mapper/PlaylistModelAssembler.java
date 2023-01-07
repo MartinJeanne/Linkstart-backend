@@ -1,8 +1,8 @@
-package com.linkstart.backend.mapper;
+package com.linkstart.api.mapper;
 
-import com.linkstart.backend.controller.PlaylistController;
-import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.model.entity.Playlist;
+import com.linkstart.api.controller.PlaylistController;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.entity.Playlist;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

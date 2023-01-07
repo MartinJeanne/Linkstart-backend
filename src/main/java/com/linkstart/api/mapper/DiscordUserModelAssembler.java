@@ -1,8 +1,8 @@
-package com.linkstart.backend.mapper;
+package com.linkstart.api.mapper;
 
-import com.linkstart.backend.controller.DiscordUserController;
-import com.linkstart.backend.model.entity.DiscordUser;
-import com.linkstart.backend.model.dto.DiscordUserDto;
+import com.linkstart.api.controller.DiscordUserController;
+import com.linkstart.api.model.entity.DiscordUser;
+import com.linkstart.api.model.dto.DiscordUserDto;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

@@ -13,7 +13,6 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
-
   linkstart-api:
     build: .
     container_name: linkstart-api

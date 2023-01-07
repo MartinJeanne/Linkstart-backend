@@ -1,4 +1,4 @@
-package com.linkstart.backend.model.dto;
+package com.linkstart.api.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

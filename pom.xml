@@ -11,16 +11,17 @@
     </parent>
 
     <groupId>com.garwalle</groupId>
-    <artifactId>linkstart-backend</artifactId>
+    <artifactId>linkstart-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>linkStartBackend</name>
     <description>
-        Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for a Discord bot.
+        REST API developed with Spring Boot for a Discord bot.
     </description>
 
     <properties>
         <java.version>18</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

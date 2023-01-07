@@ -1,25 +1,18 @@
-package com.linkstart.backend.service;
+package com.linkstart.api.service;
 
 
-import com.linkstart.backend.exception.NoContentException;
-import com.linkstart.backend.mapper.DiscordUserModelAssembler;
-import com.linkstart.backend.mapper.PlaylistModelAssembler;
-import com.linkstart.backend.model.dto.PlaylistDto;
-import com.linkstart.backend.model.entity.DiscordUser;
-import com.linkstart.backend.model.dto.DiscordUserDto;
-import com.linkstart.backend.model.entity.Playlist;
-import com.linkstart.backend.repo.DiscordUserRepo;
-import com.linkstart.backend.repo.PlaylistRepo;
+import com.linkstart.api.exception.NoContentException;
+import com.linkstart.api.mapper.DiscordUserModelAssembler;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.entity.DiscordUser;
+import com.linkstart.api.model.dto.DiscordUserDto;
+import com.linkstart.api.repo.DiscordUserRepo;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.server.core.EmbeddedWrapper;
-import org.springframework.hateoas.server.core.EmbeddedWrappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
