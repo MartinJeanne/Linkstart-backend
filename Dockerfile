@@ -7,6 +7,7 @@ RUN mvn -f pom.xml clean package -Dmaven.test.failure.ignore=true
 
 # Package stage
 FROM amazoncorretto:18-alpine-jdk
-COPY --from=build target/linkstart-backend-0.0.1-SNAPSHOT.jar linkstart-backend.jar
+WORKDIR /usr/linkstart-api
+COPY --from=build /usr/linkstart-api/target/linkstart-api-1.0.0-SNAPSHOT.jar linkstart-api.jar
 EXPOSE 8081
-ENTRYPOINT ["java", "-jar", "linkstart-backend.jar"]
+ENTRYPOINT ["java", "-jar", "linkstart-api.jar"]
