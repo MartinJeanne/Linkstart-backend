@@ -1,4 +1,4 @@
-# Linkstart-backend
+# Linkstart-api
 Back-end web services (REST API + DB) developped with Spring Boot, mysql and Docker for my Discord bot !  
 
 ## Setup
