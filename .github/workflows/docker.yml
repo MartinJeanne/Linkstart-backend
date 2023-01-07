@@ -29,7 +29,7 @@ jobs:
           docker pull garwalle/linkstart-api-image
           docker stop linkstart-api
           docker rm linkstart-api
-          docker run -d --name linkstart-api -p 8081:8081  \
+          docker run -d --name linkstart-api -p 8080:8080 \
           -e "SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_DATABASE }}:3306/${{ secrets.MYSQL_DATABASE }}?allowPublicKeyRetrieval=true&useSSL=false" \
           -e "SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }}" \
           -e "SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" \
