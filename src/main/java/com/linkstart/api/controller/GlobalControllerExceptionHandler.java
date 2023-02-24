@@ -21,7 +21,7 @@ import java.util.Map;
 public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<Object> handleNoUser() {
+    public ResponseEntity<Object> handleNoContent() {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

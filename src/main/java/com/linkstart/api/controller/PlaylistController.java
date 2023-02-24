@@ -2,10 +2,11 @@ package com.linkstart.api.controller;
 
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.service.PlaylistService;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/playlists")
@@ -18,7 +19,7 @@ public class PlaylistController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<PlaylistDto>> getPlaylists() {
+    public ResponseEntity<List<PlaylistDto>> getPlaylists() {
         return playlistService.getPlaylists();
     }
 
@@ -43,7 +44,7 @@ public class PlaylistController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<CollectionModel<PlaylistDto>> searchPlaylists(
+    public ResponseEntity<List<PlaylistDto>> searchPlaylists(
             @RequestParam String filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2") int size,
