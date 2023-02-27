@@ -5,6 +5,7 @@ import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.dto.QuizDto;
 import com.linkstart.api.model.entity.DiscordUser;
 import com.linkstart.api.model.entity.Playlist;
 import com.linkstart.api.repo.DiscordUserRepo;
@@ -36,20 +37,24 @@ public class PlaylistService {
         this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<List<PlaylistDto>> getPlaylists() {
+    public List<PlaylistDto> getPlaylists() {
         List<Playlist> playlists = playlistRepo.findAll();
 
-        List<PlaylistDto> response = playlists
+        // TODO optimize?
+        return playlists
                 .stream()
-                .map(playlist -> modelMapper.map(playlist, PlaylistDto.class))
+                .map(playlist -> {
+                    PlaylistDto p = modelMapper.map(playlist, PlaylistDto.class);
+                    p.setDiscordUserDto(modelMapper.map(playlist.getDiscordUser(), DiscordUserDto.class));
+                    return p;
+                })
                 .toList();
-        return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<PlaylistDto> getPlaylistById(Long id) {
+    public PlaylistDto getPlaylistById(Long id) {
         Playlist playlist = playlistRepo.findById(id).orElseThrow(NoContentException::new);
         PlaylistDto PlaylistDto = modelMapper.map(playlist, PlaylistDto.class);
-        return ResponseEntity.ok(PlaylistDto);
+        return PlaylistDto;
     }
 
     public ResponseEntity<PlaylistDto> createPlaylist(PlaylistDto playlistDto, Long discordUserId) {
