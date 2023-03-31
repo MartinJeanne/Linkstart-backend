@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Create .env file
+      run: |
+        echo "MYSQL_URL=${{ secrets.MYSQL_URL }}" > .env
+        echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+        echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+        echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
     - name: Build Docker Image
       run: |
         docker build -t linkstart-api-image .
@@ -29,9 +35,4 @@ jobs:
           docker pull garwalle/linkstart-api-image
           docker stop linkstart-api
           docker rm linkstart-api
-          docker run -d --name linkstart-api -p 8080:8080 \
-          -e "SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_DATABASE }}:3306/${{ secrets.MYSQL_DATABASE }}?allowPublicKeyRetrieval=true&useSSL=false" \
-          -e "SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }}" \
-          -e "SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" \
-          --net="linkstart" \
-          garwalle/linkstart-api-image
+          docker run -d --name linkstart-api -p 8080:8080 --net="linkstart" garwalle/linkstart-api-image

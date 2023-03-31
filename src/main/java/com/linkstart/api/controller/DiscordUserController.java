@@ -3,10 +3,11 @@ package com.linkstart.api.controller;
 import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.service.DiscordUserService;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/discordUsers")
@@ -19,8 +20,8 @@ public class DiscordUserController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<DiscordUserDto>> getDiscordUsers() {
-        CollectionModel<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsers();
+    public ResponseEntity<List<DiscordUserDto>> getDiscordUsers() {
+        List<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsers();
         return ResponseEntity.ok(discordUsersDto);
     }
 
@@ -47,8 +48,8 @@ public class DiscordUserController {
     }
 
     @GetMapping("/{id}/playlists")
-    public ResponseEntity<CollectionModel<PlaylistDto>> getDiscordUserByIdPlaylists(@PathVariable("id") Long id) {
-        CollectionModel<PlaylistDto> playlistsDto = discordUserService.getDiscordUserByIdPlaylists(id);
+    public ResponseEntity<List<PlaylistDto>> getDiscordUserByIdPlaylists(@PathVariable("id") Long id) {
+        List<PlaylistDto> playlistsDto = discordUserService.getDiscordUserByIdPlaylists(id);
         return ResponseEntity.ok(playlistsDto);
     }
 }
