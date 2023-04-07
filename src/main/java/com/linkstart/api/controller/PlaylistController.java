@@ -30,17 +30,18 @@ public class PlaylistController {
 
     @PostMapping
     public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam Long discordUserId) {
-        return playlistService.createPlaylist(playlistDto, discordUserId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(playlistService.createPlaylist(playlistDto, discordUserId));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PlaylistDto> updatePlaylist(@PathVariable("id") Long id, @RequestBody PlaylistDto playlistDto) {
-        return playlistService.updatePlaylist(id, playlistDto);
+        return ResponseEntity.ok(playlistService.updatePlaylist(id, playlistDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePlaylist(@PathVariable("id") Long id) {
-        return playlistService.deletePlaylist(id);
+        playlistService.deletePlaylist(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/search")
@@ -50,6 +51,6 @@ public class PlaylistController {
             @RequestParam(defaultValue = "2") int size,
             @RequestParam(defaultValue = "username") String orderBy,
             @RequestParam(defaultValue = "true") Boolean ascending) {
-        return playlistService.searchPlaylists(filter, page, size, orderBy, ascending);
+        return ResponseEntity.ok(playlistService.searchPlaylists(filter, page, size, orderBy, ascending));
     }
 }

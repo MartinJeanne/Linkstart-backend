@@ -3,6 +3,7 @@ package com.linkstart.api.service;
 import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NoFilterGivenException;
+import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.model.dto.QuizDto;
@@ -41,14 +42,11 @@ public class PlaylistService {
         List<Playlist> playlists = playlistRepo.findAll();
 
         // TODO optimize?
-        return playlists
-                .stream()
-                .map(playlist -> {
-                    PlaylistDto p = modelMapper.map(playlist, PlaylistDto.class);
-                    p.setDiscordUserDto(modelMapper.map(playlist.getDiscordUser(), DiscordUserDto.class));
-                    return p;
-                })
-                .toList();
+        return playlists.stream().map(playlist -> {
+            PlaylistDto p = modelMapper.map(playlist, PlaylistDto.class);
+            p.setDiscordUserDto(modelMapper.map(playlist.getDiscordUser(), DiscordUserDto.class));
+            return p;
+        }).toList();
     }
 
     public PlaylistDto getPlaylistById(Long id) {
@@ -57,36 +55,33 @@ public class PlaylistService {
         return PlaylistDto;
     }
 
-    public ResponseEntity<PlaylistDto> createPlaylist(PlaylistDto playlistDto, Long discordUserId) {
-        DiscordUser discordUser = discordUserRepo.findById(discordUserId).orElseThrow(NoContentException::new);
+    public PlaylistDto createPlaylist(PlaylistDto playlistDto, Long discordUserId) {
+        DiscordUser discordUser = discordUserRepo.findById(discordUserId)
+                .orElseThrow(() -> new NotFoundException("user " + discordUserId));
         playlistDto.setDiscordUserDto(modelMapper.map(discordUser, DiscordUserDto.class));
         Playlist playlist = modelMapper.map(playlistDto, Playlist.class);
         playlistRepo.save(playlist);
-        return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(playlist, PlaylistDto.class));
+        return modelMapper.map(playlist, PlaylistDto.class);
     }
 
-    public ResponseEntity<PlaylistDto> updatePlaylist(Long id, PlaylistDto PlaylistDto) {
+    public PlaylistDto updatePlaylist(Long id, PlaylistDto PlaylistDto) {
         playlistRepo.findById(id).orElseThrow(NoContentException::new);
         PlaylistDto.setId(id);
         Playlist updatedPlaylist = playlistRepo.save(modelMapper.map(PlaylistDto, Playlist.class));
-        return ResponseEntity.ok(modelMapper.map(updatedPlaylist, PlaylistDto.class));
+        return modelMapper.map(updatedPlaylist, PlaylistDto.class);
     }
 
-    public ResponseEntity<HttpStatus> deletePlaylist(Long id) {
-        Playlist playlist = playlistRepo.findById(id).orElseThrow(NoContentException::new);
+    public void deletePlaylist(Long id) {
+        Playlist playlist = playlistRepo.findById(id).orElseThrow(() -> new NotFoundException("playlist " + id));
         playlistRepo.delete(playlist);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     public List<PlaylistDto> getPlaylistByDiscordUser(DiscordUser discordUser) {
         List<Playlist> playlists = playlistRepo.findByDiscordUser(discordUser);
-        return playlists
-                .stream()
-                .map(playlist -> modelMapper.map(playlist, PlaylistDto.class))
-                .toList();
+        return playlists.stream().map(playlist -> modelMapper.map(playlist, PlaylistDto.class)).toList();
     }
 
-    public ResponseEntity<List<PlaylistDto>> searchPlaylists(String filter, Integer page, Integer size, String orderBy,
+    public List<PlaylistDto> searchPlaylists(String filter, Integer page, Integer size, String orderBy,
             Boolean ascending) {
         if (filter.isEmpty())
             throw new NoFilterGivenException();
@@ -105,10 +100,7 @@ public class PlaylistService {
             pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Playlist> playlists = playlistRepo.findByNameContaining(filter, pageable);
 
-        return ResponseEntity.ok(playlists
-                .stream()
-                .map(playlist -> modelMapper.map(playlist, PlaylistDto.class))
-                .toList());
+        return playlists.stream().map(playlist -> modelMapper.map(playlist, PlaylistDto.class)).toList();
     }
 }
 
