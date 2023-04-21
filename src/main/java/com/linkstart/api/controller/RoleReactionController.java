@@ -5,9 +5,7 @@ import com.linkstart.api.model.dto.RoleReactionDto;
 import com.linkstart.api.service.DiscordMessageService;
 import com.linkstart.api.service.RoleReactionService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class RoleReactionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoleReactionDto>> getRoleReactions() {
-        return ResponseEntity.ok(roleReactionService.getRoleReactions());
+    public ResponseEntity<RoleReactionDto> getRoleReactions(@RequestParam String discordId, @RequestParam String reaction) {
+        return ResponseEntity.ok(roleReactionService.getRoleReaction(discordId, reaction));
     }
 }

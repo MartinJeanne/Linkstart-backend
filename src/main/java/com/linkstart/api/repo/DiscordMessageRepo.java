@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DiscordMessageRepo extends JpaRepository<DiscordMessage, Long> {
+    DiscordMessage findByDiscordId(String discordId);
 }
