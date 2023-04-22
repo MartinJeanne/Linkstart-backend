@@ -6,7 +6,6 @@ import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.model.dto.PlaylistDto;
-import com.linkstart.api.model.dto.QuizDto;
 import com.linkstart.api.model.entity.DiscordUser;
 import com.linkstart.api.model.entity.Playlist;
 import com.linkstart.api.repo.DiscordUserRepo;
@@ -16,9 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;

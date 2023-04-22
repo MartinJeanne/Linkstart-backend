@@ -9,13 +9,14 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Entity
-public class RoleReaction {
+@Embeddable
+public class RoleReactionId implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private RoleReactionId roleReactionId;
 
     @NotNull
-    private String role;
+    @ManyToOne
+    private DiscordMessage discordMessage;
+
+    @NotNull
+    private String reaction;
 }

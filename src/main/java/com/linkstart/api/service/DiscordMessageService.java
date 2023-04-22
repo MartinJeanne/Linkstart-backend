@@ -30,4 +30,9 @@ public class DiscordMessageService {
                 .map(discordMessage -> modelMapper.map(discordMessage, DiscordMessageDto.class))
                 .toList();
     }
+
+    public DiscordMessageDto getDiscordMessageByDiscordId(String discordId) {
+        DiscordMessage discordMessage = discordMessageRepo.findByDiscordId(discordId);
+        return modelMapper.map(discordMessage, DiscordMessageDto.class);
+    }
 }
