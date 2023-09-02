@@ -26,8 +26,8 @@ public class DiscordUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DiscordUserDto> getDiscordUserById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(discordUserService.getDiscordUserById(id));
+    public ResponseEntity<DiscordUserDto> getDiscordUserByDiscordId(@PathVariable("id") String id) {
+        return ResponseEntity.ok(discordUserService.getDiscordUserByDiscordId(id));
     }
 
     @PostMapping
@@ -48,7 +48,7 @@ public class DiscordUserController {
     }
 
     @GetMapping("/{id}/playlists")
-    public ResponseEntity<List<PlaylistDto>> getDiscordUserByIdPlaylists(@PathVariable("id") Long id) {
+    public ResponseEntity<List<PlaylistDto>> getDiscordUserByIdPlaylists(@PathVariable("id") String id) {
         List<PlaylistDto> playlistsDto = discordUserService.getDiscordUserByIdPlaylists(id);
         return ResponseEntity.ok(playlistsDto);
     }

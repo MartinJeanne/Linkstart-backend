@@ -30,6 +30,6 @@ public class Playlist {
 
     @Override
     public String toString() {
-        return "TODO";
+        return "Playlist: " + name + ", url: " + url;
     }
 }
