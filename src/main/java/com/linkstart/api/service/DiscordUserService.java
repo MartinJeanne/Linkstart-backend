@@ -37,8 +37,8 @@ public class DiscordUserService {
                 .toList();
     }
 
-    public DiscordUserDto getDiscordUserById(Long id) {
-        DiscordUser discordUser = discordUserRepo.findById(id).orElseThrow(NoContentException::new);
+    public DiscordUserDto getDiscordUserByDiscordId(String id) {
+        DiscordUser discordUser = discordUserRepo.findByDiscordId(id).orElseThrow(NoContentException::new);
         return modelMapper.map(discordUser, DiscordUserDto.class);
     }
 
@@ -61,8 +61,8 @@ public class DiscordUserService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public List<PlaylistDto> getDiscordUserByIdPlaylists(Long id) {
-        DiscordUserDto discordUserDto = this.getDiscordUserById(id);
+    public List<PlaylistDto> getDiscordUserByIdPlaylists(String id) {
+        DiscordUserDto discordUserDto = this.getDiscordUserByDiscordId(id);
         DiscordUser discordUser = modelMapper.map(discordUserDto, DiscordUser.class);
         return playlistService.getPlaylistByDiscordUser(discordUser);
     }
