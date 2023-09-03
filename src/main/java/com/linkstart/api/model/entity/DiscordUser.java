@@ -15,9 +15,12 @@ public class DiscordUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String discordId;
     @NotNull
     private String tag;
+
+    private String avatarURL;
 
     @Override
     public String toString() {

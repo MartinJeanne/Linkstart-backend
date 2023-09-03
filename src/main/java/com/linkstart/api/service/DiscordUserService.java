@@ -61,9 +61,9 @@ public class DiscordUserService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public List<PlaylistDto> getDiscordUserByIdPlaylists(String id) {
+    public List<PlaylistDto> getPlaylistsByDiscordUser(String id) {
         DiscordUserDto discordUserDto = this.getDiscordUserByDiscordId(id);
         DiscordUser discordUser = modelMapper.map(discordUserDto, DiscordUser.class);
-        return playlistService.getPlaylistByDiscordUser(discordUser);
+        return playlistService.getPlaylistsByDiscordUser(discordUser);
     }
 }

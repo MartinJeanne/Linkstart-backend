@@ -8,5 +8,6 @@ import lombok.Setter;
 public class DiscordUserDto {
     private Long id;
     private String discordId;
+    private String avatarURL;
     private String tag;
 }

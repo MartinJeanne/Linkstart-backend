@@ -48,8 +48,8 @@ public class DiscordUserController {
     }
 
     @GetMapping("/{id}/playlists")
-    public ResponseEntity<List<PlaylistDto>> getDiscordUserByIdPlaylists(@PathVariable("id") String id) {
-        List<PlaylistDto> playlistsDto = discordUserService.getDiscordUserByIdPlaylists(id);
+    public ResponseEntity<List<PlaylistDto>> getPlaylistsByDiscordUser(@PathVariable("id") String id) {
+        List<PlaylistDto> playlistsDto = discordUserService.getPlaylistsByDiscordUser(id);
         return ResponseEntity.ok(playlistsDto);
     }
 }
