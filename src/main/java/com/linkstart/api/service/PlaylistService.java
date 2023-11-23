@@ -72,7 +72,7 @@ public class PlaylistService {
         playlistRepo.delete(playlist);
     }
 
-    public List<PlaylistDto> getPlaylistByDiscordUser(DiscordUser discordUser) {
+    public List<PlaylistDto> getPlaylistsByDiscordUser(DiscordUser discordUser) {
         List<Playlist> playlists = playlistRepo.findByDiscordUser(discordUser);
         return playlists.stream().map(playlist -> modelMapper.map(playlist, PlaylistDto.class)).toList();
     }

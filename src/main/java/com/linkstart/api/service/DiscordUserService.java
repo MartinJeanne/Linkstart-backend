@@ -5,16 +5,22 @@ import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.model.entity.DiscordUser;
 import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.repo.DiscordUserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class DiscordUserService {
     private final DiscordUserRepo discordUserRepo;
     private final PlaylistService playlistService;
@@ -37,6 +43,20 @@ public class DiscordUserService {
                 .toList();
     }
 
+    public List<DiscordUserDto> getDiscordUsersBirthdayIsNow() {
+        List<DiscordUserDto> discordUsers = getDiscordUsers();
+        LocalDate now = LocalDate.now();
+
+        List<DiscordUserDto> discordUsersBirthdayIsNow = new ArrayList<>();
+        for (DiscordUserDto user : discordUsers) {
+            log.info(user.getBirthday().toString());
+            if (user.getBirthday().isEqual(now)) {
+                discordUsersBirthdayIsNow.add(user);
+            }
+        }
+        return discordUsersBirthdayIsNow;
+    }
+
     public DiscordUserDto getDiscordUserByDiscordId(String id) {
         DiscordUser discordUser = discordUserRepo.findByDiscordId(id).orElseThrow(NoContentException::new);
         return modelMapper.map(discordUser, DiscordUserDto.class);
@@ -44,6 +64,7 @@ public class DiscordUserService {
 
     public DiscordUserDto createDiscordUser(DiscordUserDto discordUserDto) {
         DiscordUser discordUser = modelMapper.map(discordUserDto, DiscordUser.class);
+
         discordUserRepo.save(discordUser);
         return modelMapper.map(discordUser, DiscordUserDto.class);
     }
@@ -52,6 +73,7 @@ public class DiscordUserService {
         discordUserRepo.findById(id).orElseThrow(NoContentException::new);
         discordUserDto.setId(id);
         DiscordUser updatedDiscordUser = discordUserRepo.save(modelMapper.map(discordUserDto, DiscordUser.class));
+        //updatedDiscordUser.setBirthday(LocalDate.of(2023, 11, 23));
         return modelMapper.map(updatedDiscordUser, DiscordUserDto.class);
     }
 
@@ -61,9 +83,9 @@ public class DiscordUserService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public List<PlaylistDto> getDiscordUserByIdPlaylists(String id) {
+    public List<PlaylistDto> getPlaylistsByDiscordUser(String id) {
         DiscordUserDto discordUserDto = this.getDiscordUserByDiscordId(id);
         DiscordUser discordUser = modelMapper.map(discordUserDto, DiscordUser.class);
-        return playlistService.getPlaylistByDiscordUser(discordUser);
+        return playlistService.getPlaylistsByDiscordUser(discordUser);
     }
 }
