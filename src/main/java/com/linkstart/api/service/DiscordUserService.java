@@ -7,17 +7,13 @@ import com.linkstart.api.model.dto.DiscordUserDto;
 import com.linkstart.api.repo.DiscordUserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -49,8 +45,7 @@ public class DiscordUserService {
 
         List<DiscordUserDto> discordUsersBirthdayIsNow = new ArrayList<>();
         for (DiscordUserDto user : discordUsers) {
-            log.info(user.getBirthday().toString());
-            if (user.getBirthday().isEqual(now)) {
+            if (user.getBirthday() != null && user.getBirthday().isEqual(now)) {
                 discordUsersBirthdayIsNow.add(user);
             }
         }
