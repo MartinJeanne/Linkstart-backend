@@ -52,4 +52,10 @@ public class DiscordUserController {
         List<PlaylistDto> playlistsDto = discordUserService.getPlaylistsByDiscordUser(id);
         return ResponseEntity.ok(playlistsDto);
     }
+
+    @GetMapping("/birthday")
+    public ResponseEntity<List<DiscordUserDto>> checkBirthday() {
+        List<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsersBirthdayIsNow();
+        return ResponseEntity.ok(discordUsersDto);
+    }
 }
