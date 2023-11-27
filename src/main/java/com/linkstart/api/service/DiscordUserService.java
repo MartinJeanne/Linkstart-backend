@@ -45,7 +45,12 @@ public class DiscordUserService {
 
         List<DiscordUserDto> discordUsersBirthdayIsNow = new ArrayList<>();
         for (DiscordUserDto user : discordUsers) {
-            if (user.getBirthday() != null && user.getBirthday().isEqual(now)) {
+            if (user.getBirthday() == null) continue;
+
+            int birthdayMonth = user.getBirthday().getMonthValue();
+            int birthdayDay = user.getBirthday().getDayOfMonth();
+
+            if (birthdayMonth == now.getMonthValue() && birthdayDay == now.getDayOfMonth()) {
                 discordUsersBirthdayIsNow.add(user);
             }
         }
