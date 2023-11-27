@@ -55,7 +55,7 @@ public class DiscordUserController {
 
     @GetMapping("/birthday")
     public ResponseEntity<List<DiscordUserDto>> checkBirthday() {
-        List<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsersBirthdayIsNow();
+        List<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsersBirthdayIsTomorrow();
         return ResponseEntity.ok(discordUsersDto);
     }
 }
