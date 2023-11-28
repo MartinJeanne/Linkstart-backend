@@ -42,8 +42,8 @@ public class DiscordUserService {
     public List<DiscordUserDto> getDiscordUsersBirthdayIsTomorrow() {
         List<DiscordUserDto> discordUsers = getDiscordUsers();
         LocalDate now = LocalDate.now();
-        int nowMonth = now.getMonthValue() + 1; // +1 because we check for tomorrow
-        int tomorrowDay = now.getDayOfMonth();
+        int nowMonth = now.getMonthValue();
+        int tomorrowDay = now.getDayOfMonth() + 1; // +1 because we check for tomorrow
 
         List<DiscordUserDto> discordUsersBirthdayIsNow = new ArrayList<>();
         for (DiscordUserDto user : discordUsers) {
