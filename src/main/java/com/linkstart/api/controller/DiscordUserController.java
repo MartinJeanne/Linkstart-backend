@@ -53,8 +53,8 @@ public class DiscordUserController {
         return ResponseEntity.ok(playlistsDto);
     }
 
-    @GetMapping("/birthday")
-    public ResponseEntity<List<DiscordUserDto>> checkBirthday() {
+    @GetMapping("/checkBirthdayIsTomorrow")
+    public ResponseEntity<List<DiscordUserDto>> checkBirthdayIsTomorrow() {
         List<DiscordUserDto> discordUsersDto = discordUserService.getDiscordUsersBirthdayIsTomorrow();
         return ResponseEntity.ok(discordUsersDto);
     }
