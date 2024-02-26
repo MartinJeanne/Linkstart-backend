@@ -39,10 +39,9 @@ public class DiscordUserService {
                 .toList();
     }
 
-    public List<DiscordUserDto> getDiscordUsersBirthdayIsTomorrow() {
+    public List<DiscordUserDto> getDiscordUsersBirthdayIsToday() {
         List<DiscordUserDto> discordUsers = getDiscordUsers();
-        LocalDate tomorrow = LocalDate.now().plusDays(1);
-
+        LocalDate today = LocalDate.now();
 
         List<DiscordUserDto> discordUsersBirthdayIsNow = new ArrayList<>();
         for (DiscordUserDto user : discordUsers) {
@@ -50,9 +49,9 @@ public class DiscordUserService {
 
             LocalDate userBirthday = user.getBirthday();
             // To compare dates, we set them to the same year
-            userBirthday = userBirthday.withYear(tomorrow.getYear());
+            userBirthday = userBirthday.withYear(today.getYear());
 
-            if (userBirthday.equals(tomorrow)) {
+            if (userBirthday.equals(today)) {
                 discordUsersBirthdayIsNow.add(user);
             }
         }
