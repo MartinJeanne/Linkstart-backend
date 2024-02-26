@@ -20,8 +20,14 @@ public class DiscordUser {
 
     @NotNull
     private String discordId;
+
     @NotNull
     private String tag;
+
+    @NotNull
+    @ManyToOne
+    private DiscordServer discordServer;
+
     private LocalDate birthday;
 
     private String avatarURL;
