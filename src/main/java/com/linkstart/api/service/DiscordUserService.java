@@ -1,9 +1,13 @@
 package com.linkstart.api.service;
 
+import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoContentException;
+import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.entity.DiscordServer;
 import com.linkstart.api.model.entity.DiscordUser;
 import com.linkstart.api.model.dto.DiscordUserDto;
+import com.linkstart.api.repo.DiscordServerRepo;
 import com.linkstart.api.repo.DiscordUserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -14,21 +18,25 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 public class DiscordUserService {
     private final DiscordUserRepo discordUserRepo;
     private final PlaylistService playlistService;
+    private final DiscordServerRepo discordServerRepo;
     private final ModelMapper modelMapper;
 
     public DiscordUserService(
             DiscordUserRepo discordUserRepo,
             PlaylistService playlistService,
-            ModelMapper modelMapper) {
+            ModelMapper modelMapper,
+            DiscordServerRepo discordServerRepo) {
         this.discordUserRepo = discordUserRepo;
         this.playlistService = playlistService;
         this.modelMapper = modelMapper;
+        this.discordServerRepo = discordServerRepo;
     }
 
     public List<DiscordUserDto> getDiscordUsers() {
@@ -64,6 +72,10 @@ public class DiscordUserService {
     }
 
     public DiscordUserDto createDiscordUser(DiscordUserDto discordUserDto) {
+        Optional<DiscordServer> discordServer = discordServerRepo.findByDiscordId(discordUserDto.getDiscordServerId());
+        if (discordServer.isEmpty())
+            throw new NotFoundException(discordUserDto.getDiscordServerId()+ " DiscordServerId");
+
         DiscordUser discordUser = modelMapper.map(discordUserDto, DiscordUser.class);
 
         discordUserRepo.save(discordUser);
@@ -72,7 +84,6 @@ public class DiscordUserService {
 
     public DiscordUserDto updateDiscordUser(Long id, DiscordUserDto discordUserDto) {
         discordUserRepo.findById(id).orElseThrow(NoContentException::new);
-        discordUserDto.setId(id);
         DiscordUser updatedDiscordUser = discordUserRepo.save(modelMapper.map(discordUserDto, DiscordUser.class));
         //updatedDiscordUser.setBirthday(LocalDate.of(2023, 11, 23));
         return modelMapper.map(updatedDiscordUser, DiscordUserDto.class);
