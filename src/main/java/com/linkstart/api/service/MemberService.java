@@ -6,7 +6,7 @@ import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.model.entity.Server;
 import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.model.dto.MemberDto;
-import com.linkstart.api.repo.ServerRepo;
+import com.linkstart.api.repo.GuildRepo;
 import com.linkstart.api.repo.MemberRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -24,18 +24,18 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepo memberRepo;
     private final PlaylistService playlistService;
-    private final ServerRepo serverRepo;
+    private final GuildRepo guildRepo;
     private final ModelMapper modelMapper;
 
     public MemberService(
             MemberRepo memberRepo,
             PlaylistService playlistService,
             ModelMapper modelMapper,
-            ServerRepo serverRepo) {
+            GuildRepo guildRepo) {
         this.memberRepo = memberRepo;
         this.playlistService = playlistService;
         this.modelMapper = modelMapper;
-        this.serverRepo = serverRepo;
+        this.guildRepo = guildRepo;
     }
 
     public List<MemberDto> getMember() {
@@ -71,7 +71,7 @@ public class MemberService {
     }
 
     public MemberDto createMember(MemberDto memberDto) {
-        Optional<Server> discordServer = serverRepo.findByDiscordId(memberDto.getDiscordServerId());
+        Optional<Server> discordServer = guildRepo.findByDiscordId(memberDto.getDiscordServerId());
         if (discordServer.isEmpty())
             throw new NotFoundException(memberDto.getDiscordServerId()+ " DiscordServerId");
 
