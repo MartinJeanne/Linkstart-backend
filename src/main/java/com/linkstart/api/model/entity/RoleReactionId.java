@@ -15,7 +15,7 @@ public class RoleReactionId implements Serializable {
 
     @NotNull
     @ManyToOne
-    private DiscordMessage discordMessage;
+    private Message message;
 
     @NotNull
     private String reaction;

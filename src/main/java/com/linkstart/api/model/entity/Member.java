@@ -4,15 +4,13 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-public class DiscordServer {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +19,19 @@ public class DiscordServer {
     @NotNull
     private String discordId;
 
-    private String botChannelId;
+    @NotNull
+    private String tag;
 
     @NotNull
-    private String name;
+    @ManyToOne
+    private Server server;
+
+    private LocalDate birthday;
+
+    private String avatarURL;
 
     @Override
     public String toString() {
-        return "Server: " + this.name + ", discordId: " + this.id;
+        return "Member: " + this.tag + ", discordId: " + this.id;
     }
 }

@@ -4,11 +4,11 @@ import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.exception.NotFoundException;
-import com.linkstart.api.model.dto.DiscordUserDto;
+import com.linkstart.api.model.dto.MemberDto;
 import com.linkstart.api.model.dto.PlaylistDto;
-import com.linkstart.api.model.entity.DiscordUser;
+import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.model.entity.Playlist;
-import com.linkstart.api.repo.DiscordUserRepo;
+import com.linkstart.api.repo.MemberRepo;
 import com.linkstart.api.repo.PlaylistRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,12 +25,12 @@ import java.util.List;
 public class PlaylistService {
 
     private final PlaylistRepo playlistRepo;
-    private final DiscordUserRepo discordUserRepo;
+    private final MemberRepo memberRepo;
     private final ModelMapper modelMapper;
 
-    public PlaylistService(PlaylistRepo playlistRepo, DiscordUserRepo discordUserRepo, ModelMapper modelMapper) {
+    public PlaylistService(PlaylistRepo playlistRepo, MemberRepo memberRepo, ModelMapper modelMapper) {
         this.playlistRepo = playlistRepo;
-        this.discordUserRepo = discordUserRepo;
+        this.memberRepo = memberRepo;
         this.modelMapper = modelMapper;
     }
 
@@ -40,7 +40,7 @@ public class PlaylistService {
         // TODO optimize?
         return playlists.stream().map(playlist -> {
             PlaylistDto p = modelMapper.map(playlist, PlaylistDto.class);
-            p.setDiscordUserDto(modelMapper.map(playlist.getDiscordUser(), DiscordUserDto.class));
+            p.setMemberDto(modelMapper.map(playlist.getMember(), MemberDto.class));
             return p;
         }).toList();
     }
@@ -52,9 +52,9 @@ public class PlaylistService {
     }
 
     public PlaylistDto createPlaylist(PlaylistDto playlistDto, Long discordUserId) {
-        DiscordUser discordUser = discordUserRepo.findById(discordUserId)
+        Member member = memberRepo.findById(discordUserId)
                 .orElseThrow(() -> new NotFoundException("user " + discordUserId));
-        playlistDto.setDiscordUserDto(modelMapper.map(discordUser, DiscordUserDto.class));
+        playlistDto.setMemberDto(modelMapper.map(member, MemberDto.class));
         Playlist playlist = modelMapper.map(playlistDto, Playlist.class);
         playlistRepo.save(playlist);
         return modelMapper.map(playlist, PlaylistDto.class);
@@ -71,8 +71,8 @@ public class PlaylistService {
         playlistRepo.delete(playlist);
     }
 
-    public List<PlaylistDto> getPlaylistsByDiscordUser(DiscordUser discordUser) {
-        List<Playlist> playlists = playlistRepo.findByDiscordUser(discordUser);
+    public List<PlaylistDto> getPlaylistsByDiscordUser(Member member) {
+        List<Playlist> playlists = playlistRepo.findByMember(member);
         return playlists.stream().map(playlist -> modelMapper.map(playlist, PlaylistDto.class)).toList();
     }
 

@@ -4,7 +4,7 @@ import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
-import com.linkstart.api.model.entity.DiscordUser;
+import com.linkstart.api.model.entity.Member;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -49,7 +49,7 @@ public class GlobalControllerExceptionHandler {
         body.put("message", ex.toString());
 
         List<String> columns = new ArrayList<>();
-        Field[] fields = DiscordUser.class.getDeclaredFields();
+        Field[] fields = Member.class.getDeclaredFields();
         for(Field field: fields) columns.add(field.getName());
         body.put("columnsList", columns);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);

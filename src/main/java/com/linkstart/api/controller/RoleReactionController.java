@@ -1,13 +1,9 @@
 package com.linkstart.api.controller;
 
-import com.linkstart.api.model.dto.DiscordMessageDto;
 import com.linkstart.api.model.dto.RoleReactionDto;
-import com.linkstart.api.service.DiscordMessageService;
 import com.linkstart.api.service.RoleReactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/roleReactions")

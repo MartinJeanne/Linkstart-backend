@@ -1,4 +1,4 @@
-package com.linkstart.api.model.dto;
+package com.linkstart.api.model.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -11,8 +11,23 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
-public class DiscordServerDto {
+@Entity
+public class Server {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
     private String discordId;
+
     private String botChannelId;
+
+    @NotNull
     private String name;
+
+    @Override
+    public String toString() {
+        return "Server: " + this.name + ", discordId: " + this.id;
+    }
 }

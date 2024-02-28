@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
-public class DiscordMessage {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

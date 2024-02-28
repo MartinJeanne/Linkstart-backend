@@ -10,6 +10,6 @@ import java.sql.Date;
 public class PlaylistDto {
     private String name;
     private String url;
-    private DiscordUserDto discordUserDto;
+    private MemberDto memberDto;
     private Date created_at;
 }

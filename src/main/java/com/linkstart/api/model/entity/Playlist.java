@@ -18,7 +18,7 @@ public class Playlist {
 
     @NotNull
     @ManyToOne
-    private DiscordUser discordUser;
+    private Member member;
 
     @NotNull
     private String name;
