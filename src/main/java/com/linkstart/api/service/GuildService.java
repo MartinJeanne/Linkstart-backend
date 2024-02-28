@@ -22,24 +22,24 @@ public class GuildService {
     }
 
     public List<GuildDto> getServers() {
-        List<Server> servers = guildRepo.findAll();
-        return servers
+        List<Guild> guilds = guildRepo.findAll();
+        return guilds
                 .stream()
-                .map(server -> modelMapper.map(server, GuildDto.class))
+                .map(guild -> modelMapper.map(guild, GuildDto.class))
                 .toList();
     }
 
     public GuildDto getServerById(Long id) {
-        Optional<Server> discordServer = guildRepo.findById(id);
+        Optional<Guild> discordServer = guildRepo.findById(id);
         if(discordServer.isEmpty())
-            throw new NotFoundException(id + " Server");
+            throw new NotFoundException(id + " Guild");
 
         return modelMapper.map(discordServer.get(), GuildDto.class);
     }
 
     public GuildDto createServer(GuildDto guildDto) {
-        Server server = modelMapper.map(guildDto, Server.class);
-        Server savedServer = guildRepo.save(server);
-        return modelMapper.map(savedServer, GuildDto.class);
+        Guild guild = modelMapper.map(guildDto, Guild.class);
+        Guild savedGuild = guildRepo.save(guild);
+        return modelMapper.map(savedGuild, GuildDto.class);
     }
 }

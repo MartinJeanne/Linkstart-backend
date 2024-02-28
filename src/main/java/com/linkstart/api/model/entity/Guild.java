@@ -5,21 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
 @Setter
 @Entity
-public class Server {
+public class Guild {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    private String discordId;
+    private long id;
 
     private String botChannelId;
 
@@ -28,6 +22,6 @@ public class Server {
 
     @Override
     public String toString() {
-        return "Server: " + this.name + ", discordId: " + this.id;
+        return "Guild: " + this.name + ", discordId: " + this.id;
     }
 }

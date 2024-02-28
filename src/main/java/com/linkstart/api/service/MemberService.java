@@ -3,7 +3,7 @@ package com.linkstart.api.service;
 import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.PlaylistDto;
-import com.linkstart.api.model.entity.Server;
+import com.linkstart.api.model.entity.Guild;
 import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.model.dto.MemberDto;
 import com.linkstart.api.repo.GuildRepo;
@@ -47,33 +47,33 @@ public class MemberService {
     }
 
     public List<MemberDto> birthdayIsToday() {
-        List<MemberDto> discordUsers = getMember();
+        List<MemberDto> members = getMember();
         LocalDate today = LocalDate.now();
 
         List<MemberDto> discordUsersBirthdayIsNow = new ArrayList<>();
-        for (MemberDto user : discordUsers) {
-            if (user.getBirthday() == null) continue;
+        for (MemberDto member : members) {
+            if (member.getBirthday() == null) continue;
 
-            LocalDate userBirthday = user.getBirthday();
+            LocalDate userBirthday = member.getBirthday();
             // To compare dates, we set them to the same year
             userBirthday = userBirthday.withYear(today.getYear());
 
             if (userBirthday.equals(today)) {
-                discordUsersBirthdayIsNow.add(user);
+                discordUsersBirthdayIsNow.add(member);
             }
         }
         return discordUsersBirthdayIsNow;
     }
 
-    public MemberDto getMemberByDiscordId(String id) {
-        Member member = memberRepo.findByDiscordId(id).orElseThrow(NoContentException::new);
+    public MemberDto getMemberById(long id) {
+        Member member = memberRepo.findById(id).orElseThrow(NoContentException::new);
         return modelMapper.map(member, MemberDto.class);
     }
 
     public MemberDto createMember(MemberDto memberDto) {
-        Optional<Server> discordServer = guildRepo.findByDiscordId(memberDto.getDiscordServerId());
-        if (discordServer.isEmpty())
-            throw new NotFoundException(memberDto.getDiscordServerId()+ " DiscordServerId");
+        Optional<Guild> guild = guildRepo.findByDiscordId(memberDto.getGuildId());
+        if (guild.isEmpty())
+            throw new NotFoundException("guildId: " + memberDto.getGuildId());
 
         Member member = modelMapper.map(memberDto, Member.class);
 
@@ -94,8 +94,8 @@ public class MemberService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public List<PlaylistDto> getPlaylistsByMember(String id) {
-        MemberDto memberDto = this.getMemberByDiscordId(id);
+    public List<PlaylistDto> getPlaylistsByMember(long id) {
+        MemberDto memberDto = this.getMemberById(id);
         Member member = modelMapper.map(memberDto, Member.class);
         return playlistService.getPlaylistsByDiscordUser(member);
     }

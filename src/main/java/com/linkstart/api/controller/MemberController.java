@@ -26,8 +26,8 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDto> getMemberByDiscordId(@PathVariable("id") String id) {
-        return ResponseEntity.ok(memberService.getMemberByDiscordId(id));
+    public ResponseEntity<MemberDto> getMemberByDiscordId(@PathVariable("id") long id) {
+        return ResponseEntity.ok(memberService.getMemberById(id));
     }
 
     @PostMapping
@@ -48,7 +48,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}/playlists")
-    public ResponseEntity<List<PlaylistDto>> getPlaylistsByMember(@PathVariable("id") String id) {
+    public ResponseEntity<List<PlaylistDto>> getPlaylistsByMember(@PathVariable("id") long id) {
         List<PlaylistDto> playlistsDto = memberService.getPlaylistsByMember(id);
         return ResponseEntity.ok(playlistsDto);
     }

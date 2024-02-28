@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GuildDto {
-    private String discordId;
+    private long id;
     private String botChannelId;
     private String name;
 }

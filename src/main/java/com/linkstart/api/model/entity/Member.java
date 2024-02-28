@@ -13,8 +13,7 @@ import java.time.LocalDate;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     private String discordId;
@@ -24,11 +23,11 @@ public class Member {
 
     @NotNull
     @ManyToOne
-    private Server server;
+    private Guild guild;
 
     private LocalDate birthday;
 
-    private String avatarURL;
+    private String avatar;
 
     @Override
     public String toString() {
