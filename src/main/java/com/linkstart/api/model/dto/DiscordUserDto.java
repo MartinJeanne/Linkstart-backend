@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class DiscordUserDto {
-    private Long id;
     private String discordId;
     private String tag;
     private String discordServerId;

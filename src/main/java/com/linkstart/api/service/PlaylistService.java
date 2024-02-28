@@ -62,7 +62,6 @@ public class PlaylistService {
 
     public PlaylistDto updatePlaylist(Long id, PlaylistDto PlaylistDto) {
         playlistRepo.findById(id).orElseThrow(NoContentException::new);
-        PlaylistDto.setId(id);
         Playlist updatedPlaylist = playlistRepo.save(modelMapper.map(PlaylistDto, Playlist.class));
         return modelMapper.map(updatedPlaylist, PlaylistDto.class);
     }

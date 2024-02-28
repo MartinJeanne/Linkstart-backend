@@ -13,6 +13,5 @@ import java.util.Date;
 @Getter
 @Setter
 public class DiscordMessageDto {
-    private Long id;
     private String discordId;
 }

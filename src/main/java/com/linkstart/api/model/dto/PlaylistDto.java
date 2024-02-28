@@ -8,7 +8,6 @@ import java.sql.Date;
 @Getter
 @Setter
 public class PlaylistDto {
-    private Long id;
     private String name;
     private String url;
     private DiscordUserDto discordUserDto;
