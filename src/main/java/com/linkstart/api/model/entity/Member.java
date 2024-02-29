@@ -16,9 +16,6 @@ public class Member {
     private long id;
 
     @NotNull
-    private String discordId;
-
-    @NotNull
     private String tag;
 
     @NotNull
@@ -31,6 +28,6 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member: " + this.tag + ", discordId: " + this.id;
+        return "Member: " + this.tag + ", id: " + this.id;
     }
 }

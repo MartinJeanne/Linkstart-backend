@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageDto {
-    private String discordId;
+    private long id;
 }

@@ -15,9 +15,5 @@ import javax.persistence.Id;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    private String discordId;
+    private long id;
 }

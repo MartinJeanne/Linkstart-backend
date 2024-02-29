@@ -21,7 +21,7 @@ public class GuildService {
         this.modelMapper = modelMapper;
     }
 
-    public List<GuildDto> getServers() {
+    public List<GuildDto> getGuilds() {
         List<Guild> guilds = guildRepo.findAll();
         return guilds
                 .stream()
@@ -29,15 +29,15 @@ public class GuildService {
                 .toList();
     }
 
-    public GuildDto getServerById(Long id) {
-        Optional<Guild> discordServer = guildRepo.findById(id);
-        if(discordServer.isEmpty())
+    public GuildDto getGuildById(Long id) {
+        Optional<Guild> guild = guildRepo.findById(id);
+        if(guild.isEmpty())
             throw new NotFoundException(id + " Guild");
 
-        return modelMapper.map(discordServer.get(), GuildDto.class);
+        return modelMapper.map(guild.get(), GuildDto.class);
     }
 
-    public GuildDto createServer(GuildDto guildDto) {
+    public GuildDto createGuild(GuildDto guildDto) {
         Guild guild = modelMapper.map(guildDto, Guild.class);
         Guild savedGuild = guildRepo.save(guild);
         return modelMapper.map(savedGuild, GuildDto.class);

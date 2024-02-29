@@ -22,10 +22,10 @@ public class RoleReactionService {
         this.modelMapper = modelMapper;
     }
 
-    public RoleReactionDto getRoleReaction(String discordId, String reaction) {
+    public RoleReactionDto getRoleReaction(long id, String reaction) {
         RoleReaction roleReaction;
-        if (discordId == null || reaction == null) return null;
-        MessageDto messageDto = messageService.getMessageByDiscordId(discordId);
+        if (reaction == null) return null;
+        MessageDto messageDto = messageService.getMessageByDiscordId(id);
         Message message = modelMapper.map(messageDto, Message.class);
 
         RoleReactionId reactionId = new RoleReactionId();

@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageService {
@@ -26,8 +27,8 @@ public class MessageService {
                 .toList();
     }
 
-    public MessageDto getMessageByDiscordId(String discordId) {
-        Message message = messageRepo.findByDiscordId(discordId);
-        return modelMapper.map(message, MessageDto.class);
+    public MessageDto getMessageByDiscordId(long id) {
+        Optional<Message> message = messageRepo.findById(id);
+        return modelMapper.map(message.get(), MessageDto.class);
     }
 }

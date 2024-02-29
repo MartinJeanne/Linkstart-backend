@@ -22,6 +22,6 @@ public class Guild {
 
     @Override
     public String toString() {
-        return "Guild: " + this.name + ", discordId: " + this.id;
+        return "Guild: " + this.name + ", id: " + this.id;
     }
 }

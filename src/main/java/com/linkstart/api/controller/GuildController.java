@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/servers")
+@RequestMapping("/api/guilds")
 public class GuildController {
 
     private final GuildService guildService;
@@ -19,17 +19,17 @@ public class GuildController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GuildDto>> getServers() {
-        return ResponseEntity.ok(guildService.getServers());
+    public ResponseEntity<List<GuildDto>> getGuilds() {
+        return ResponseEntity.ok(guildService.getGuilds());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GuildDto> getServerById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(guildService.getServerById(id));
+    public ResponseEntity<GuildDto> getGuildById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(guildService.getGuildById(id));
     }
 
     @PostMapping
-    public ResponseEntity<GuildDto> createServer(@RequestBody GuildDto guildDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(guildService.createServer(guildDto));
+    public ResponseEntity<GuildDto> createGuild(@RequestBody GuildDto guildDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(guildService.createGuild(guildDto));
     }
 }

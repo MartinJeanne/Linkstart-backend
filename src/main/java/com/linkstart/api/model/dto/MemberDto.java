@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class MemberDto {
     private long id;
     private String tag;
-    private String guildId;
+    private long guildId;
     private String avatar;
     private LocalDate birthday;
 }
