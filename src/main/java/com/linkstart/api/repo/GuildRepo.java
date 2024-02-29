@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface GuildRepo extends JpaRepository<Guild, Long> {
+public interface GuildRepo extends JpaRepository<Guild, String> {
 }

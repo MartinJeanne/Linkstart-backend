@@ -27,7 +27,7 @@ public class MessageService {
                 .toList();
     }
 
-    public MessageDto getMessageByDiscordId(long id) {
+    public MessageDto getMessageByDiscordId(String id) {
         Optional<Message> message = messageRepo.findById(id);
         return modelMapper.map(message.get(), MessageDto.class);
     }

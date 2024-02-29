@@ -13,7 +13,8 @@ import java.time.LocalDate;
 public class Member {
 
     @Id
-    private long id;
+    @Column(columnDefinition = "VARCHAR(18)")
+    private String id;
 
     @NotNull
     private String tag;

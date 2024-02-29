@@ -8,9 +8,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class MemberDto {
-    private long id;
+    private String id;
     private String tag;
-    private long guildId;
+    private String guildId;
     private String avatar;
     private LocalDate birthday;
 }

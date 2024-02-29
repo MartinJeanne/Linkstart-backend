@@ -1,5 +1,6 @@
 package com.linkstart.api.service;
 
+import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.GuildDto;
 import com.linkstart.api.model.entity.*;
@@ -8,7 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GuildService {
@@ -29,12 +29,9 @@ public class GuildService {
                 .toList();
     }
 
-    public GuildDto getGuildById(Long id) {
-        Optional<Guild> guild = guildRepo.findById(id);
-        if(guild.isEmpty())
-            throw new NotFoundException(id + " Guild");
-
-        return modelMapper.map(guild.get(), GuildDto.class);
+    public GuildDto getGuildById(String id) {
+        Guild guild = guildRepo.findById(id).orElseThrow(NoContentException::new);
+        return modelMapper.map(guild, GuildDto.class);
     }
 
     public GuildDto createGuild(GuildDto guildDto) {

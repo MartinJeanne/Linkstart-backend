@@ -16,7 +16,7 @@ public class RoleReactionController {
     }
 
     @GetMapping
-    public ResponseEntity<RoleReactionDto> getRoleReactions(@RequestParam long id, @RequestParam String reaction) {
+    public ResponseEntity<RoleReactionDto> getRoleReactions(@RequestParam String id, @RequestParam String reaction) {
         return ResponseEntity.ok(roleReactionService.getRoleReaction(id, reaction));
     }
 }

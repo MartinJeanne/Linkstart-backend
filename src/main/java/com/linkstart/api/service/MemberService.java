@@ -65,7 +65,7 @@ public class MemberService {
         return discordUsersBirthdayIsNow;
     }
 
-    public MemberDto getMemberById(long id) {
+    public MemberDto getMemberById(String id) {
         Member member = memberRepo.findById(id).orElseThrow(NoContentException::new);
         return modelMapper.map(member, MemberDto.class);
     }
@@ -81,20 +81,20 @@ public class MemberService {
         return modelMapper.map(member, MemberDto.class);
     }
 
-    public MemberDto updateMember(Long id, MemberDto memberDto) {
+    public MemberDto updateMember(String id, MemberDto memberDto) {
         memberRepo.findById(id).orElseThrow(NoContentException::new);
         Member updatedMember = memberRepo.save(modelMapper.map(memberDto, Member.class));
         //updatedMember.setBirthday(LocalDate.of(2023, 11, 23));
         return modelMapper.map(updatedMember, MemberDto.class);
     }
 
-    public ResponseEntity<HttpStatus> deleteMember(Long id) {
+    public ResponseEntity<HttpStatus> deleteMember(String id) {
         Member member = memberRepo.findById(id).orElseThrow(NoContentException::new);
         memberRepo.delete(member);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public List<PlaylistDto> getPlaylistsByMember(long id) {
+    public List<PlaylistDto> getPlaylistsByMember(String id) {
         MemberDto memberDto = this.getMemberById(id);
         Member member = modelMapper.map(memberDto, Member.class);
         return playlistService.getPlaylistsByDiscordUser(member);

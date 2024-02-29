@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageDto {
-    private long id;
+    private String id;
 }

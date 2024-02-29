@@ -24,22 +24,22 @@ public class PlaylistController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlaylistDto> getPlaylistById(@PathVariable("id") Long id) {
+    public ResponseEntity<PlaylistDto> getPlaylistById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(playlistService.getPlaylistById(id));
     }
 
     @PostMapping
-    public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam Long discordUserId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(playlistService.createPlaylist(playlistDto, discordUserId));
+    public ResponseEntity<PlaylistDto> createPlaylist(@RequestBody PlaylistDto playlistDto, @RequestParam String memberId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(playlistService.createPlaylist(playlistDto, memberId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PlaylistDto> updatePlaylist(@PathVariable("id") Long id, @RequestBody PlaylistDto playlistDto) {
+    public ResponseEntity<PlaylistDto> updatePlaylist(@PathVariable("id") Integer id, @RequestBody PlaylistDto playlistDto) {
         return ResponseEntity.ok(playlistService.updatePlaylist(id, playlistDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deletePlaylist(@PathVariable("id") Long id) {
+    public ResponseEntity<HttpStatus> deletePlaylist(@PathVariable("id") Integer id) {
         playlistService.deletePlaylist(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

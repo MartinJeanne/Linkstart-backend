@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,9 +14,8 @@ import javax.persistence.Id;
 public class Guild {
 
     @Id
-    private long id;
-
-    private String botChannelId;
+    @Column(columnDefinition = "VARCHAR(18)")
+    private String id;
 
     @NotNull
     private String name;

@@ -24,7 +24,7 @@ public class GuildController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GuildDto> getGuildById(@PathVariable("id") Long id) {
+    public ResponseEntity<GuildDto> getGuildById(@PathVariable("id") String id) {
         return ResponseEntity.ok(guildService.getGuildById(id));
     }
 
