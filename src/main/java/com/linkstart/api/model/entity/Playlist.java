@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,7 +26,7 @@ public class Playlist {
     @NotNull
     private String url;
 
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @Override
     public String toString() {

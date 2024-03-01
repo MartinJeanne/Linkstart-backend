@@ -4,7 +4,6 @@ import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.exception.NotFoundException;
-import com.linkstart.api.model.dto.MemberDto;
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.model.entity.Playlist;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +37,7 @@ public class PlaylistService {
     public List<PlaylistDto> getPlaylists() {
         List<Playlist> playlists = playlistRepo.findAll();
 
-        // TODO optimize?
-        return playlists.stream().map(playlist -> {
-            PlaylistDto p = modelMapper.map(playlist, PlaylistDto.class);
-            p.setMemberDto(modelMapper.map(playlist.getMember(), MemberDto.class));
-            return p;
-        }).toList();
+        return playlists.stream().map(playlist -> modelMapper.map(playlist, PlaylistDto.class)).toList();
     }
 
     public PlaylistDto getPlaylistById(Integer id) {
@@ -54,8 +49,9 @@ public class PlaylistService {
         Member member = memberRepo.findById(memberId)
                 .orElseThrow(() -> new NotFoundException("member: " + memberId));
 
-        playlistDto.setMemberDto(modelMapper.map(member, MemberDto.class));
         Playlist playlist = modelMapper.map(playlistDto, Playlist.class);
+        playlist.setMember(member);
+        playlist.setCreated_at(LocalDateTime.now());
         playlistRepo.save(playlist);
         return modelMapper.map(playlist, PlaylistDto.class);
     }
