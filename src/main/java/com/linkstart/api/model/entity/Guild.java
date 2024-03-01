@@ -20,6 +20,8 @@ public class Guild {
     @NotNull
     private String name;
 
+    private String botChannelId;
+
     @Override
     public String toString() {
         return "Guild: " + this.name + ", id: " + this.id;

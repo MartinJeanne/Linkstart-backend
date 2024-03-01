@@ -84,7 +84,6 @@ public class MemberService {
     public MemberDto updateMember(String id, MemberDto memberDto) {
         memberRepo.findById(id).orElseThrow(NoContentException::new);
         Member updatedMember = memberRepo.save(modelMapper.map(memberDto, Member.class));
-        //updatedMember.setBirthday(LocalDate.of(2023, 11, 23));
         return modelMapper.map(updatedMember, MemberDto.class);
     }
 
