@@ -47,7 +47,7 @@ public class PlaylistService {
 
     public PlaylistDto createPlaylist(PlaylistDto playlistDto, String memberId) {
         Member member = memberRepo.findById(memberId)
-                .orElseThrow(() -> new NotFoundException("member: " + memberId));
+                .orElseThrow(() -> new NotFoundException(memberId, Member.class));
 
         Playlist playlist = modelMapper.map(playlistDto, Playlist.class);
         playlist.setMember(member);
@@ -63,7 +63,8 @@ public class PlaylistService {
     }
 
     public void deletePlaylist(Integer id) {
-        Playlist playlist = playlistRepo.findById(id).orElseThrow(() -> new NotFoundException("playlist " + id));
+        Playlist playlist = playlistRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString(), Playlist.class));
         playlistRepo.delete(playlist);
     }
 

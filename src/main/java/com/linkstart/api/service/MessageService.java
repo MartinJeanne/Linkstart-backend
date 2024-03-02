@@ -1,5 +1,6 @@
 package com.linkstart.api.service;
 
+import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.MessageDto;
 import com.linkstart.api.model.entity.Message;
 import com.linkstart.api.repo.MessageRepo;
@@ -27,8 +28,9 @@ public class MessageService {
                 .toList();
     }
 
-    public MessageDto getMessageByDiscordId(String id) {
-        Optional<Message> message = messageRepo.findById(id);
-        return modelMapper.map(message.get(), MessageDto.class);
+    public MessageDto getMessageById(String id) {
+        Message message = messageRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Message.class));
+        return modelMapper.map(message, MessageDto.class);
     }
 }

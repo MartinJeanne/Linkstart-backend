@@ -25,7 +25,7 @@ public class RoleReactionService {
     public RoleReactionDto getRoleReaction(String id, String reaction) {
         RoleReaction roleReaction;
         if (reaction == null) return null;
-        MessageDto messageDto = messageService.getMessageByDiscordId(id);
+        MessageDto messageDto = messageService.getMessageById(id);
         Message message = modelMapper.map(messageDto, Message.class);
 
         RoleReactionId reactionId = new RoleReactionId();

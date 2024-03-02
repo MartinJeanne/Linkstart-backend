@@ -73,7 +73,7 @@ public class MemberService {
     public MemberDto createMember(MemberDto memberDto) {
         Optional<Guild> guild = guildRepo.findById(memberDto.getGuildId());
         if (guild.isEmpty())
-            throw new NotFoundException("guildId: " + memberDto.getGuildId());
+            throw new NotFoundException(memberDto.getGuildId(), Guild.class);
 
         Member member = modelMapper.map(memberDto, Member.class);
 
