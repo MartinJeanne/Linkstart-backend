@@ -1,6 +1,5 @@
 package com.linkstart.api.service;
 
-import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.model.entity.Guild;
@@ -10,8 +9,6 @@ import com.linkstart.api.repo.GuildRepo;
 import com.linkstart.api.repo.MemberRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -66,7 +63,9 @@ public class MemberService {
     }
 
     public MemberDto getMemberById(String id) {
-        Member member = memberRepo.findById(id).orElseThrow(NoContentException::new);
+        Member member = memberRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Member.class));
+
         return modelMapper.map(member, MemberDto.class);
     }
 
@@ -82,15 +81,18 @@ public class MemberService {
     }
 
     public MemberDto updateMember(String id, MemberDto memberDto) {
-        memberRepo.findById(id).orElseThrow(NoContentException::new);
+        memberRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Member.class));
+
         Member updatedMember = memberRepo.save(modelMapper.map(memberDto, Member.class));
         return modelMapper.map(updatedMember, MemberDto.class);
     }
 
-    public ResponseEntity<HttpStatus> deleteMember(String id) {
-        Member member = memberRepo.findById(id).orElseThrow(NoContentException::new);
+    public void deleteMember(String id) {
+        Member member = memberRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Member.class));
+
         memberRepo.delete(member);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     public List<PlaylistDto> getPlaylistsByMember(String id) {

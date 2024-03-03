@@ -2,7 +2,6 @@ package com.linkstart.api.controller;
 
 import com.linkstart.api.exception.NoColumnsException;
 import com.linkstart.api.exception.NoFilterGivenException;
-import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.entity.Member;
 import org.springframework.http.HttpStatus;
@@ -21,21 +20,16 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<Object> handleNoContent() {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Object> handleNotFoundException(Exception ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.toString());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class, NoFilterGivenException.class})
     public ResponseEntity<Object> handleNoFilterGiven(Exception ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", ex.toString());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleNotFoundException(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.toString());

@@ -1,6 +1,5 @@
 package com.linkstart.api.service;
 
-import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.GuildDto;
 import com.linkstart.api.model.entity.*;
@@ -30,7 +29,8 @@ public class GuildService {
     }
 
     public GuildDto getGuildById(String id) {
-        Guild guild = guildRepo.findById(id).orElseThrow(NoContentException::new);
+        Guild guild = guildRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Guild.class));
         return modelMapper.map(guild, GuildDto.class);
     }
 

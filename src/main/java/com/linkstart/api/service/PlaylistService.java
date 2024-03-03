@@ -1,7 +1,6 @@
 package com.linkstart.api.service;
 
 import com.linkstart.api.exception.NoColumnsException;
-import com.linkstart.api.exception.NoContentException;
 import com.linkstart.api.exception.NoFilterGivenException;
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.model.dto.PlaylistDto;
@@ -41,7 +40,8 @@ public class PlaylistService {
     }
 
     public PlaylistDto getPlaylistById(Integer id) {
-        Playlist playlist = playlistRepo.findById(id).orElseThrow(NoContentException::new);
+        Playlist playlist = playlistRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString(), Playlist.class));
         return modelMapper.map(playlist, PlaylistDto.class);
     }
 
@@ -56,8 +56,10 @@ public class PlaylistService {
         return modelMapper.map(playlist, PlaylistDto.class);
     }
 
-    public PlaylistDto updatePlaylist(int id, PlaylistDto PlaylistDto) {
-        playlistRepo.findById(id).orElseThrow(NoContentException::new);
+    public PlaylistDto updatePlaylist(Integer id, PlaylistDto PlaylistDto) {
+        playlistRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id.toString(), Playlist.class));
+
         Playlist updatedPlaylist = playlistRepo.save(modelMapper.map(PlaylistDto, Playlist.class));
         return modelMapper.map(updatedPlaylist, PlaylistDto.class);
     }
