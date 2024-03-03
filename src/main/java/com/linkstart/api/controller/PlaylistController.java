@@ -41,7 +41,7 @@ public class PlaylistController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePlaylist(@PathVariable("id") Integer id) {
         playlistService.deletePlaylist(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")

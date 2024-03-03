@@ -44,6 +44,7 @@ public class MemberController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteMember(@PathVariable("id") String id) {
+        memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }
 
