@@ -1,11 +1,11 @@
 package com.linkstart.api.model.entity;
 
-import com.sun.istack.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,11 +14,11 @@ public class Playlist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotNull
     @ManyToOne
-    private DiscordUser discordUser;
+    private Member member;
 
     @NotNull
     private String name;
@@ -26,7 +26,7 @@ public class Playlist {
     @NotNull
     private String url;
 
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @Override
     public String toString() {

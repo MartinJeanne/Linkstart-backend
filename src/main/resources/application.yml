@@ -1,0 +1,28 @@
+server:
+  port: '8080'
+
+spring:
+  # Database config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_URL:localhost}:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+  # JPA config
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # Use the .env file for the environment variable
+  config:
+    import: optional:file:.env[.properties]
+
+  mvc:
+    # Date format
+    format:
+      date: yyyy-MM-dd

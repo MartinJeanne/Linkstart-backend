@@ -1,10 +1,11 @@
 package com.linkstart.api.model.entity;
 
-import com.sun.istack.NotNull;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -15,7 +16,7 @@ public class RoleReactionId implements Serializable {
 
     @NotNull
     @ManyToOne
-    private DiscordMessage discordMessage;
+    private Message message;
 
     @NotNull
     private String reaction;

@@ -4,14 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class DiscordUserDto {
-    private Long id;
-    private String discordId;
-    private String avatarURL;
+public class MemberDto {
+    private String id;
     private String tag;
+    private String guildId;
+    private String avatar;
     private LocalDate birthday;
 }
