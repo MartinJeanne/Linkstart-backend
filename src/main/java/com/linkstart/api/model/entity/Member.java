@@ -14,7 +14,6 @@ import java.util.List;
 public class Member {
 
     @Id
-    @Column(columnDefinition = "VARCHAR(18)")
     private String id;
 
     @NotNull
