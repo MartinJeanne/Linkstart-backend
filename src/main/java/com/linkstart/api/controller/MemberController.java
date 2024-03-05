@@ -20,8 +20,8 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberDto>> getMember() {
-        List<MemberDto> members = memberService.getMember();
+    public ResponseEntity<List<MemberDto>> getMembers() {
+        List<MemberDto> members = memberService.getMembers();
         return ResponseEntity.ok(members);
     }
 
