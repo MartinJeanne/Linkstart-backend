@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class PlaylistDto {
+    private int id;
     private String name;
     private String url;
     private String memberId;
