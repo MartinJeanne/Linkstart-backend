@@ -1,11 +1,11 @@
 package com.linkstart.api.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,6 +20,9 @@ public class Guild {
     private String name;
 
     private String botChannelId;
+
+    @ManyToMany(mappedBy = "guilds")
+    private List<Member> members;
 
     @Override
     public String toString() {

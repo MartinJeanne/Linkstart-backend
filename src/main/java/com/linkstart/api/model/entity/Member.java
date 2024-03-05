@@ -1,14 +1,12 @@
 package com.linkstart.api.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,12 +21,21 @@ public class Member {
     private String tag;
 
     @NotNull
-    @ManyToOne
-    private Guild guild;
+    @ManyToMany
+    @JoinTable(name = "member_guilds",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "guild_id"))
+    private List<Guild> guilds;
 
     private LocalDate birthday;
 
     private String avatar;
+
+    public void addGuild(Guild guild) {
+        List<Guild> guilds = this.getGuilds();
+        guilds.add(guild);
+        this.setGuilds(guilds);
+    }
 
     @Override
     public String toString() {
