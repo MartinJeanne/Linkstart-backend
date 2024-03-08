@@ -33,7 +33,6 @@ public class AuthenticationService {
                 .build();
 
         Client savedClient = clientRepo.save(client);
-
         String token = jwtService.generateToken(savedClient);
         return new AuthResponseDto(token);
     }

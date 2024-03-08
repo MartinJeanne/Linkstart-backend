@@ -4,6 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,9 @@ import java.util.Date;
 public class JwtService {
 
     private static final long JWT_EXPIRATION = 1000 * 60 * 15;
-    private static final SecretKey JWT_SECRET_KEY = Jwts.SIG.HS256.key().build(); //TODO
+
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String generateToken(UserDetails userDetails) {
         String clientName = userDetails.getUsername();
@@ -27,14 +32,20 @@ public class JwtService {
                 .subject(clientName)
                 .issuedAt(currentDate)
                 .expiration(expireDate)
-                .signWith(JWT_SECRET_KEY)
+                .signWith(getSignInKey())
                 .compact();
+    }
+
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
+
     }
 
     private Jws<Claims> parseJwt(String token) {
         try {
             return Jwts.parser()
-                    .verifyWith(JWT_SECRET_KEY)
+                    .verifyWith(getSignInKey())
                     .build()
                     .parseSignedClaims(token);
         } catch (JwtException e) {
