@@ -17,7 +17,7 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final long JWT_EXPIRATION = 1000 * 60 * 15;
+    private static final long JWT_EXPIRATION = 1000 * 60 * 60; // = 1 hour
 
     @Value("${jwt.secret}")
     private String secret;
