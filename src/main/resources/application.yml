@@ -26,3 +26,7 @@ spring:
     # Date format
     format:
       date: yyyy-MM-dd
+
+jwt:
+  secret: ${JWT_SECRET}
+  registerPassword: ${REGISTER_PASSWORD}
