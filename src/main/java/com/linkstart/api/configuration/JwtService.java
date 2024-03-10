@@ -6,8 +6,8 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
+@Slf4j
 public class JwtService {
 
     private static final long JWT_EXPIRATION = 1000 * 60 * 60; // = 1 hour
@@ -49,12 +50,15 @@ public class JwtService {
                     .build()
                     .parseSignedClaims(token);
         } catch (JwtException e) {
-            throw new AuthenticationCredentialsNotFoundException("JWT expired or incorrect");
+            log.error("JWT expired or incorrect");
+            return null;
         }
     }
 
     public String extractClientName(String token) {
-        return parseJwt(token)
+        Jws<Claims> claimsJws = parseJwt(token);
+        if (claimsJws == null) return null;
+        return claimsJws
                 .getPayload()
                 .getSubject();
     }
