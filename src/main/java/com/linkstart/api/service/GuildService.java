@@ -36,4 +36,13 @@ public class GuildService {
         Guild savedGuild = guildRepo.save(guild);
         return guildMapper.toDto(savedGuild);
     }
+
+    public GuildDto updateGuild(String id, GuildDto guildDto) {
+        guildRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Guild.class));
+
+        Guild guild = guildMapper.toEntity(guildDto);
+        Guild savedGuild = guildRepo.save(guild);
+        return guildMapper.toDto(savedGuild);
+    }
 }

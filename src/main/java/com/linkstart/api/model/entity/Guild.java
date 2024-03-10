@@ -20,6 +20,7 @@ public class Guild {
 
     private String botChannelId;
 
+    @NotNull
     @ManyToMany(mappedBy = "guilds")
     private List<Member> members;
 
