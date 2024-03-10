@@ -32,4 +32,9 @@ public class GuildController {
     public ResponseEntity<GuildDto> createGuild(@RequestBody GuildDto guildDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(guildService.createGuild(guildDto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GuildDto> updateGuild(@PathVariable("id") String id, @RequestBody GuildDto guildDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(guildService.updateGuild(id, guildDto));
+    }
 }

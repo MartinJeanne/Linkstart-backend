@@ -2,19 +2,19 @@ package com.linkstart.api.service;
 
 import com.linkstart.api.exception.NotFoundException;
 import com.linkstart.api.mapper.MemberMapper;
-import com.linkstart.api.model.dto.PlaylistDto;
-import com.linkstart.api.model.entity.Guild;
-import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.model.dto.MemberDto;
+import com.linkstart.api.model.dto.PlaylistDto;
+import com.linkstart.api.model.entity.Member;
 import com.linkstart.api.repo.GuildRepo;
 import com.linkstart.api.repo.MemberRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -67,35 +67,41 @@ public class MemberService {
     }
 
     public MemberDto createMember(MemberDto memberDto) {
-        List<Guild> guilds = new ArrayList<>();
-        Guild guild;
-        for (String id : memberDto.getGuildsId()) {
-            guild = guildRepo.findById(id).orElseThrow(() -> new NotFoundException(id, Guild.class));
-            guilds.add(guild);
-        }
-
         Member member = memberMapper.toEntity(memberDto);
-        member.setGuilds(guilds);
-
-        memberRepo.save(member);
-        return memberMapper.toDto(member);
+        Member savedMember = memberRepo.save(member);
+        return memberMapper.toDto(savedMember);
     }
 
     public MemberDto updateMember(String id, MemberDto memberDto) {
         memberRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException(id, Member.class));
 
-        List<Guild> guilds = new ArrayList<>();
-        Guild guild;
-        for (String guildId : memberDto.getGuildsId()) {
-            guild = guildRepo.findById(guildId).orElseThrow(() -> new NotFoundException(guildId, Guild.class));
-            guilds.add(guild);
+        Member memberUpdate = memberMapper.toEntity(memberDto);
+        Member updatedMember = memberRepo.save(memberUpdate);
+        return memberMapper.toDto(updatedMember);
+    }
+
+    public MemberDto partiallyUpdateMember(String id, MemberDto memberDto) throws IllegalAccessException {
+        Member existingMember = memberRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, Member.class));
+
+        Member incompleteMember = memberMapper.toEntity(memberDto);
+
+        Class<?> memberClass = Member.class;
+        Field[] memberFields = memberClass.getDeclaredFields();
+        for (Field field : memberFields) {
+            field.setAccessible(true);
+
+            Object value = field.get(incompleteMember);
+            if (value != null) {
+                if (!(value instanceof Collection<?>) || !((Collection<?>) value).isEmpty()) {
+                    field.set(existingMember, value);
+                }
+            }
+            field.setAccessible(false);
         }
 
-        Member memberUpdate = memberMapper.toEntity(memberDto);
-        memberUpdate.setGuilds(guilds);
-        Member updatedMember = memberRepo.save(memberUpdate);
-
+        Member updatedMember = memberRepo.save(existingMember);
         return memberMapper.toDto(updatedMember);
     }
 
