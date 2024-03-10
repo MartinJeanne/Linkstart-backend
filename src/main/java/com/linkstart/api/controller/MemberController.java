@@ -1,5 +1,6 @@
 package com.linkstart.api.controller;
 
+import com.linkstart.api.exception.PartialUpdateException;
 import com.linkstart.api.model.dto.MemberDto;
 import com.linkstart.api.model.dto.PlaylistDto;
 import com.linkstart.api.service.MemberService;
@@ -40,6 +41,17 @@ public class MemberController {
     public ResponseEntity<MemberDto> updateMember(@PathVariable("id") String id, @RequestBody MemberDto memberDto) {
         MemberDto memberDtoUpdated = memberService.updateMember(id, memberDto);
         return ResponseEntity.ok(memberDtoUpdated);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<MemberDto> partiallyUpdateMember(
+            @PathVariable("id") String id, @RequestBody MemberDto memberDto) {
+        try {
+            MemberDto memberDtoUpdated = memberService.partiallyUpdateMember(id, memberDto);
+            return ResponseEntity.ok(memberDtoUpdated);
+        } catch (Exception e) {
+            throw new PartialUpdateException(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
